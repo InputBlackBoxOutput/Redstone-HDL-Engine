@@ -1,0 +1,133 @@
+{
+    "creator": "Yosys 0.9 (git sha1 1979e0b1, i686-w64-mingw32.static-g++ 5.5.0 -Os)",
+    "modules": {
+        "test": {
+            "attributes": {
+                "cells_not_processed": 1,
+                "src": "test\\reduce_and.v:1"
+            },
+            "ports": {
+                "A": {
+                    "direction": "input",
+                    "bits": [
+                        2,
+                        3,
+                        4
+                    ]
+                },
+                "Y": {
+                    "direction": "output",
+                    "bits": [
+                        5,
+                        6,
+                        7
+                    ]
+                }
+            },
+            "cells": {
+                "$reduce_and$test\\reduce_and.v:2$1": {
+                    "hide_name": 1,
+                    "type": "$reduce_and",
+                    "model": "$reduce_and:3:3:0",
+                    "parameters": {
+                        "A_WIDTH": 3,
+                        "Y_WIDTH": 3,
+                        "A_SIGNED": 0
+                    },
+                    "attributes": {
+                        "src": "test\\reduce_and.v:2"
+                    },
+                    "port_directions": {
+                        "A": "input",
+                        "Y": "output"
+                    },
+                    "connections": {
+                        "A": [
+                            2,
+                            3,
+                            4
+                        ],
+                        "Y": [
+                            5,
+                            6,
+                            7
+                        ]
+                    }
+                }
+            },
+            "netnames": {
+                "$reduce_and$test\\reduce_and.v:2$1_Y": {
+                    "hide_name": 1,
+                    "bits": [
+                        5,
+                        6,
+                        7
+                    ],
+                    "attributes": {
+                        "src": "test\\reduce_and.v:2"
+                    }
+                },
+                "A": {
+                    "hide_name": 0,
+                    "bits": [
+                        2,
+                        3,
+                        4
+                    ],
+                    "attributes": {
+                        "src": "test\\reduce_and.v:1"
+                    }
+                },
+                "Y": {
+                    "hide_name": 0,
+                    "bits": [
+                        5,
+                        6,
+                        7
+                    ],
+                    "attributes": {
+                        "src": "test\\reduce_and.v:1"
+                    }
+                }
+            }
+        }
+    },
+    "models": {
+        "$reduce_and:3:3:0": [
+            [
+                "port",
+                "A",
+                0
+            ],
+            [
+                "port",
+                "A",
+                1
+            ],
+            [
+                "and",
+                0,
+                1
+            ],
+            [
+                "port",
+                "A",
+                2
+            ],
+            [
+                "and",
+                2,
+                3,
+                "Y",
+                0
+            ],
+            [
+                "false",
+                "Y",
+                1,
+                "Y",
+                2
+            ]
+        ]
+    }
+}
