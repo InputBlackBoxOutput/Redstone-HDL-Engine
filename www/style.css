@@ -1,0 +1,34 @@
+body {
+  font-family: "Roboto", sans-serif;
+  background-color: lightcoral !important;
+  /* background-image: url(images/background.png); */
+}
+
+#redstone-labs {
+  font-size: x-large;
+}
+
+.container-fluid {
+  background-color: white;
+}
+
+textarea {
+  font-family: monospace;
+  resize: none !important;
+}
+
+#netlist-svg,
+#symbol {
+  width: 100%;
+  height: 100%;
+  object-fit: contain !important;
+}
+
+.img-container {
+  padding: 4px;
+  border: 2px solid black;
+}
+
+footer {
+  background-color: white;
+}
