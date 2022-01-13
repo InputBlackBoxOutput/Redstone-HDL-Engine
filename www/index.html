@@ -2,6 +2,9 @@
 <html>
 <head>
 	<title> Redstone Labs </title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 	<link rel="stylesheet" type="text/css" href="style.css">	
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
@@ -36,8 +39,8 @@
                 <div class="row">
                     <label class="h5 mb-1"> Diagram </label>
                 </div>
-                <div class="row d-flex justify-content-center img-container">
-                    <img src="images/blank.png" id="netlist-svg" alt="netlist-svg">
+                <div class="row d-flex justify-content-center img-container" id="diagram-canvas-div">
+                    <canvas id='diagram-canvas'></canvas>
                 </div>
                 <div class="row mt-3">
                     <div class="col-4">
@@ -167,8 +170,11 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/mode/verilog/verilog.js"></script>
 
-    <script type="text/javascript" src="https://nturley.github.io/netlistsvg/elk.bundled.js"></script>
-    <script type="text/javascript" src="https://nturley.github.io/netlistsvg/built/netlistsvg.bundle.js"></script>
+    <script src="https://bitbucket.org/vogdb/canvas-manipulation/raw/7eb148bfe2183f76fe25d5f6460f54d364a5a3ef/dist/canvas-manipulation.min.js"></script>
+    <script src="https://bitbucket.org/vogdb/canvas-manipulation/raw/7eb148bfe2183f76fe25d5f6460f54d364a5a3ef/dist/canvas-manipulation-mouse-listeners.min.js"></script>
+
+    <script type="text/javascript" src="https://neilturley.dev/netlistsvg/elk.bundled.js"></script>
+    <script type="text/javascript" src="https://neilturley.dev/netlistsvg/built/netlistsvg.bundle.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script type="text/javascript" src="index.js"></script>
 
