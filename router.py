@@ -7,11 +7,16 @@ class Router:
         self.pins_A, self.pins_B = self.null_padding(pins_A, pins_B)
 
         self.HCG = self.generate_horizontal_constraints_graph(self.pins_A, self.pins_B)
+        self.VCG = self.generate_vertical_constraints_graph(self.pins_A, self.pins_B)
 
         if verbose:
             print("Horizontal Constraints Graph:\n")
             for i in self.HCG:
                 print(f"{i} : {self.HCG[i]}")
+
+            print("\nVertical Constraints Graph:\n")
+            for edge in self.VCG:
+                print(f"{edge[0]} -> {edge[1]}")
 
     def null_padding(self, pins_A, pins_B):
         len_A = len(pins_A)
@@ -58,6 +63,45 @@ class Router:
                     HCG_restructured[each].discard(each)
 
         return HCG_restructured
+
+    def generate_vertical_constraints_graph(self, pins_A, pins_B):
+
+        VCG = []
+        for i in range(len(pins_A)):
+            if (pins_A[i], pins_B[i]) not in VCG:
+                VCG.append((pins_A[i], pins_B[i]))
+
+        # Remove directed edges to null keeping solo nodes
+        null_edges = []
+        for edge in VCG:
+            if '0' in edge:
+                null_edges.append(edge)
+
+        for null_edge in null_edges:
+            VCG.remove(null_edge)
+        
+        for src, dst in null_edges:
+            non_null_nodes = set([x for e in VCG for x in e])
+
+            if src not in non_null_nodes and dst not in non_null_nodes:
+                VCG.append((src, dst))
+
+        # Remove edges with transitivity
+        trans_edge = []
+        for src, dst in VCG:
+            for edge_1, edge_2 in permutations(VCG, 2):
+                if edge_1[1] == edge_2[0]:
+                    if src == edge_1[0] and dst == edge_2[1]:
+                        trans_edge.append((src, dst))
+
+                # Cyclic conflict
+                if edge_1[0] == edge_2[1] and edge_1[1] == edge_2[0]:
+                    raise Exception("VCG - Cyclic conflict")
+
+        for edge in trans_edge:
+            VCG.remove(edge)
+
+        return VCG
 
 if __name__ == "__main__":
     # A = ['0', 'B', 'D', 'E', 'B', 'F', 'G', '0', 'D']
