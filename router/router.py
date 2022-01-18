@@ -8,6 +8,7 @@ class Router:
 
         self.HCG = self.generate_horizontal_constraints_graph(self.pins_A, self.pins_B)
         self.VCG = self.generate_vertical_constraints_graph(self.pins_A, self.pins_B)
+        self.left_edge_order = self.generate_left_edge_order(self.pins_A, self.pins_B)
 
         if verbose:
             print("Horizontal Constraints Graph:\n")
@@ -17,6 +18,9 @@ class Router:
             print("\nVertical Constraints Graph:\n")
             for edge in self.VCG:
                 print(f"{edge[0]} -> {edge[1]}")
+                
+            print("\nLeft edge order:\n")
+            print(self.left_edge_order)
 
     def null_padding(self, pins_A, pins_B):
         len_A = len(pins_A)
@@ -102,6 +106,17 @@ class Router:
             VCG.remove(edge)
 
         return VCG
+
+    def generate_left_edge_order(self, pins_A, pins_B):
+        order = []
+        for i in range(len(pins_A)):
+            if pins_A[i] not in order and pins_A[i] != '0':
+                order.append(pins_A[i])
+
+            if pins_B[i] not in order and pins_B[i] != '0':
+                order.append(pins_B[i])
+
+        return order
 
 if __name__ == "__main__":
     # A = ['0', 'B', 'D', 'E', 'B', 'F', 'G', '0', 'D']
