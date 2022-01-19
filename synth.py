@@ -1,5 +1,6 @@
 import glob
 from yosys import Yosys 
+from router import router, plotter
 
 class RedstoneSynth:
     def __init__(self, filepath, path="yosys/yosys.exe"):
@@ -112,3 +113,17 @@ if __name__ == "__main__":
         print(f"\nFile: {verilog_file}")
         s = RedstoneSynth(verilog_file)
         s.dump()
+
+
+    A = ['0', 'A', 'D', 'E', 'A', 'F', 'G', '0', 'D', 'I', 'J', 'J']
+    B = ['B', 'C', 'E', 'C', 'E', 'B', 'F', 'H', 'I', 'H', 'G', 'I']
+
+    r = router.Router(A, B)
+    output = r.route()
+
+    print("\nRouter output:")
+    print(output)
+
+    p = plotter.Plotter()
+    p.draw(output[0], output[1], output[2])
+    p.show()
