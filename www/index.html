@@ -16,6 +16,19 @@
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
 </head>
 <body>
+    <!-- Handle mobile devices -->
+    <script>
+        if (
+            screen.width < 500 ||
+            navigator.userAgent.match(/Android/i) ||
+            navigator.userAgent.match(/webOS/i) ||
+            navigator.userAgent.match(/iPhone/i) ||
+            navigator.userAgent.match(/iPod/i)
+        ) {
+            location.replace("mobile.html");
+        }
+    </script>
+
 	<nav class="navbar navbar-expand-lg navbar-dark bg-light">
 	    <a class="navbar-brand"> 
             <img src="images/redstone-block.gif" width="40" height="40" class="d-inline-block align-top mr-2" alt="redstone block">
@@ -28,21 +41,21 @@
 	        </ul>
 	    </div>
 	</nav>
-    <div class="container-fluid my-2 py-3 px-3">
+    <div class="container-fluid my-2 py-2 px-3">
         <div class="row">
-            <div class="col-lg-7"> 
-                <label for="verilog-code" class="h5 mb-1"> Verilog code </label>
+            <div id="verilog-code-div" class="col-lg-6 m-0 p-2"> 
+                <label for="verilog-code" class="h5 mb-2"> Verilog code </label>
                 <textarea class="form-control" id="verilog-code"></textarea>
                 <button class="btn btn-block btn-primary mt-2" id="synthesize"> Synthesize </button>
             </div>
-            <div class="col-lg-5">
-                <div class="row">
-                    <label class="h5 mb-1"> Diagram </label>
+            <div class="col-lg-6 m-0 p-2">
+                <div class="row mx-1">
+                    <label class="h5 mb-2"> Diagram </label>
                 </div>
-                <div class="row d-flex justify-content-center img-container" id="diagram-canvas-div">
-                    <canvas id='diagram-canvas'></canvas>
+                <div class="row mx-1 d-flex justify-content-center img-container" id="diagram-canvas-div">
+                    <canvas id='diagram-canvas' hidden="true"></canvas>
                 </div>
-                <div class="row mt-3">
+                <div class="row mx-1 mt-3">
                     <div class="col-4">
                         <div class="row">
                             <label for="command-block-code" class="h5"> Symbol </label>
@@ -60,7 +73,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row mt-3 alert alert-dark">
+                <div class="row mx-1 mt-3 alert alert-dark">
                     scm import link
                 </div>
             </div>
@@ -110,10 +123,10 @@
     <footer>
         <div class="container-fluid">
             <div class="row pt-2">
-                <div class="col-md-6">
+                <div id="footer-1" class="col-md-6">
                     <h6> <a href="terms-and-conditions.html">Terms & Conditions</a> | <a href="privacy-policy.html"> Privacy Policy </a> </h6>
                 </div>
-                <div class="col-md-6">
+                <div id="footer-2" class="col-md-6">
                     <h6 class="text-right">Copyright © 2022 InputBlackBoxOutput</h6>
                 </div>
             </div>

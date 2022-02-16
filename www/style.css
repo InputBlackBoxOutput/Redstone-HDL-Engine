@@ -16,8 +16,12 @@ textarea {
   resize: none !important;
 }
 
+/* #diagram-canvas-div {
+  background-color: #b4b4b4;
+} */
+
 #diagram-canvas {
-  height:480px;
+  height: 480px;
   background-color: white;
 }
 
