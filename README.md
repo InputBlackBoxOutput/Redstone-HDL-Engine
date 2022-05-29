@@ -7,6 +7,8 @@
 - https://minecraft.fandom.com/wiki/Redstone_circuits/Logic
 - https://minecraft.fandom.com/wiki/Command_Block
 - https://www.curseforge.com/minecraft/mc-mods/super-circuit-maker
+- https://personal.utdallas.edu/~xxx110230/verilog/
+- https://www.edaplayground.com/
 
 ## Future development
 - Add drag and drop coding features using [visual verilog](https://github.com/MarwanYoussef/Visual-Verilog) 
