@@ -35,7 +35,9 @@ def create_verilog_file(code):
 	code = code.split("\\r\\n")
 	code = "\n".join(code)
 
-	verilog_file = f"{abs(hash(code))}.v"
+	verilog_file = "code.v"
+	# verilog_file = f"{abs(hash(code))}.v"
+
 	with open(verilog_file, 'w') as _file:
 		_file.write(code)
 
@@ -97,4 +99,8 @@ def root():
 	return jsonify({"success": 1})	
 
 if __name__ == '__main__':
-    api.run(port=5000, debug=True)
+	api.run(
+		host="0.0.0.0", 
+		port=int(os.environ.get('PORT', 5000)), 
+		debug=False
+	)

@@ -1,9 +1,22 @@
-import os, re, subprocess, json, glob
+import os, re, subprocess, json, glob, platform
 
 class Yosys:
-	def __init__(self, path="yosys/yosys.exe"):
+	def __init__(self):
+		# Select path based on operating system
+		operating_system = platform.system()
+		if operating_system == 'Linux':
+			# sudo apt install yosys
+			path = "/usr/bin/yosys"
+		elif operating_system == 'Windows':
+			path = "yosys\yosys.exe"
+
 		self.yosys = subprocess.Popen(
-			[path, '-Q', '-T'], universal_newlines=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE
+			[path, '-Q', '-T'], 
+			shell = False,
+			universal_newlines=True, 
+			stdin=subprocess.PIPE, 
+			stdout=subprocess.PIPE,
+			stderr=subprocess.PIPE
 		)
 
 	def process(self, filepath):
@@ -11,8 +24,11 @@ class Yosys:
 			raise Exception(f"File not found: {filepath}")
 
 		# Interact with yosys
-		# out = self.yosys.communicate(f"read_verilog {filepath}\n proc\n opt\n json -aig")[0]
-		out = self.yosys.communicate(f"read_verilog {filepath}\n json -aig")[0]
+		# out, err = self.yosys.communicate(f"read_verilog {filepath}\n proc\n opt\n json -aig")
+		out, err = self.yosys.communicate(f"read_verilog {filepath}\n json -aig")
+
+		if(err != ""):
+			raise Exception("Yosys process returned non-zero return code")
 
 		# Remove newline and comments
 		out = re.sub('\n', ' ', out)
@@ -25,12 +41,9 @@ class Yosys:
 		if json_string != None:
 			netlist_json = json.loads(json_string.group(0))
 		else:
-			raise Exception(f"Error: {filepath}")
+			raise Exception(f"Failed to parse netlist")
 
 		return netlist_json
-
-	def __del__(self):
-		self.yosys.kill()
 
 if __name__ == '__main__':
 	for verilog_file in glob.glob("test/*.v"):
