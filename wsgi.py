@@ -35,7 +35,9 @@ def create_verilog_file(code):
 	code = code.split("\\r\\n")
 	code = "\n".join(code)
 
-	verilog_file = f"{abs(hash(code))}.v"
+	verilog_file = "code.v"
+	# verilog_file = f"{abs(hash(code))}.v"
+
 	with open(verilog_file, 'w') as _file:
 		_file.write(code)
 
