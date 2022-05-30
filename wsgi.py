@@ -99,4 +99,5 @@ def root():
 	return jsonify({"success": 1})	
 
 if __name__ == '__main__':
-    api.run(port=5000, debug=True)
+	port = int(os.environ.get('PORT', 33507))
+	api.run(port=port, debug=False)
