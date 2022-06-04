@@ -3,18 +3,20 @@ from yosys import Yosys
 from router import router, plotter
 
 class RedstoneSynth:
-    def __init__(self, filepath, path="yosys/yosys.exe"):
-        self.yosys = Yosys(path)
-        self.netlist_json = self.yosys.process(filepath=filepath)
+    def __init__(self):
+        self.yosys = Yosys()
+        self.netlist_json = None
         
         self.model_aig = {}
         self.ports = []
         self.cells = []
         self.net = []
 
+    def load_file(self, filepath):
+        self.netlist_json = self.yosys.process(filepath=filepath)
         self.__extractModelAIG()
         self.__extractNetlist()
-            
+
     def __extractModelAIG(self):
         for each_model in self.netlist_json["models"]:
             model = self.netlist_json["models"][each_model]

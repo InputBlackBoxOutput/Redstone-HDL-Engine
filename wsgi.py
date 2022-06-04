@@ -5,6 +5,10 @@ from bson.json_util import ObjectId
 from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
 
+from dotenv import load_dotenv
+if(not load_dotenv()):
+	print("Failed to load environment variables!")
+
 from synth import RedstoneSynth
 from yosys import Yosys
 
@@ -19,15 +23,6 @@ client = pymongo.MongoClient(f"mongodb+srv://{DB_USER}:{DB_PASSWD}@cluster0.ff8n
 db = client['Redstone-HDL']
 collection = db['contraption']
 
-# Setup JSON encoder for ObjectId
-class JSON_Encoder(json.JSONEncoder):
-
-    def default(self, obj):
-        if isinstance(obj, ObjectId):
-            return str(obj)
-        return super(JSON_Encoder, self).default(obj) 
-
-api.json_encoder = JSON_Encoder
 
 # Helper function to create verilog file to process
 def create_verilog_file(code):
@@ -50,32 +45,38 @@ def synthesize():
 	verilog_file = create_verilog_file(str(request.data))
 
 	try:
-		s = RedstoneSynth(verilog_file)
+		s = RedstoneSynth()
+		s.load_file(verilog_file)
 		redstone_circuit = {"contraption": s.synthesize()}
 		
-		collection.insert_one(redstone_circuit)
-		response = redstone_circuit
+		response = (redstone_circuit, 200)
 	except:
-		response = jsonify({"error": "Something went wrong!"})
+		response = (jsonify({"error": "Something went wrong!"}), 400)
 	finally:
 		os.remove(verilog_file)
 
 	return response
 
+
 @api.route('/link', methods=['GET'])
 @cross_origin()
 def link():
-	if request.args.get("id"):
-		_id = request.args.get("id")
-		db_data = []
-		for x in collection.find({"_id" : ObjectId(_id)}):
-			db_data.append(x)
-		
-		response = jsonify(db_data)
-	else:
-		response = (jsonify({"error": "ID required"}), 400)
+	try:
+		if request.args.get("contraption"):
+			contraption = request.args.get("contraption")
+			redstone_circuit = collection.find_one({"contraption" : contraption})["redstone_circuit"]
 
+			response = (jsonify({"circuit": redstone_circuit}), 200)
+		else:
+			response = (jsonify({"error": "Contraption name required!"}), 400)
+
+	except pymongo.errors.OperationFailure:
+		response = (jsonify({"error": "Failed to connect to database!"}), 400)
+	# except:
+	# 	response = (jsonify({"error": "Something went wrong!"}), 400)
+	
 	return response
+
 
 @api.route('/netlist', methods=['POST'])
 @cross_origin()
@@ -92,6 +93,7 @@ def netlist():
 		os.remove(verilog_file)
 
 	return response
+
 
 @api.route('/',methods=['GET'])
 @cross_origin()
