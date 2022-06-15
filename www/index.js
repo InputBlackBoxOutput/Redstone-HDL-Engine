@@ -32,7 +32,7 @@ function generateDiagram() {
     })
     .catch(function (error) {
       console.log(error);
-      alert("Something went wrong while generating diagram!");
+      displayMessageViaModal("Something went wrong!", "An error occurred while generating the diagram.");
     });
 }
 
@@ -41,12 +41,19 @@ synthesize_btn.addEventListener('click', () => {
   generateDiagram();
 })
 
+// Generic modal
+function displayMessageViaModal(messageTitle, messageContent) {
+  document.getElementsByClassName('modal-title')[0].innerHTML = messageTitle;
+  document.getElementsByClassName('modal-body')[0].innerHTML = messageContent;
+  document.getElementById('show-modal').click();
+}
+
 window.onload = () => {
   // Resize code textarea
   col_height = document.getElementById("verilog-code-div").clientHeight - 95;
   code_editor.setSize(null, col_height);
 
-  // Connect with backend
+  // Connect with backend server
   synthesize_btn.disabled = true;
 
   axios.get(`${BACKEND_ENDPOINT}`)
@@ -55,6 +62,6 @@ window.onload = () => {
     })
     .catch((error) => {
       console.log(error);
-      alert("Unable to connect to backend!");
+      displayMessageViaModal("Failed to connect to the server!", "Looks like the backend server is down. Please get in touch with the administrator");
     })
 };
