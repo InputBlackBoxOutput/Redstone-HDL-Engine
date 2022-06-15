@@ -32,7 +32,7 @@ function generateDiagram() {
     })
     .catch(function (error) {
       console.log(error);
-      alert("Something went wrong while generating diagram!");
+      displayMessageViaModal("Something went wrong!", "An error occurred while generating the diagram.");
     });
 }
 
@@ -41,12 +41,47 @@ synthesize_btn.addEventListener('click', () => {
   generateDiagram();
 })
 
+// Generic modal
+function displayMessageViaModal(messageTitle, messageContent) {
+  document.getElementsByClassName('modal-title')[0].innerHTML = messageTitle;
+  document.getElementsByClassName('modal-body')[0].innerHTML = messageContent;
+  document.getElementById('show-modal').click();
+}
+
+// Help and about modal
+document.getElementById('help').addEventListener('click', () => {
+  displayMessageViaModal(
+    "How to use the tool ?",
+    `
+    <ol>
+      <li>Write verilog code for the contraption you want to build</li>
+      <li>Click on the synthesize button to generate command block code for the contraption</li>
+      <li>Place a command block in Minecraft and enter the code generated in the previous step</li>
+    </ol>
+    <!-- Tutorial video -->
+    `
+  );
+})
+
+document.getElementById('about').addEventListener('click', () => {
+  displayMessageViaModal(
+    "About",
+    `
+    <p> A website to synthesize redstone circuits using Verilog HDL</p>
+    <a target="_blank" href="https://github.com/InputBlackBoxOutput/Redstone-HDL">
+        See repository on GitHub
+    </a>
+    <p>Created by Rutuparn Pawar (InputBlackBoxOutput)</p>
+    `
+  );
+})
+
 window.onload = () => {
   // Resize code textarea
   col_height = document.getElementById("verilog-code-div").clientHeight - 95;
   code_editor.setSize(null, col_height);
 
-  // Connect with backend
+  // Connect with backend server
   synthesize_btn.disabled = true;
 
   axios.get(`${BACKEND_ENDPOINT}`)
@@ -55,6 +90,6 @@ window.onload = () => {
     })
     .catch((error) => {
       console.log(error);
-      alert("Unable to connect to backend!");
+      displayMessageViaModal("Failed to connect to the server!", "Looks like the backend server is down. Please get in touch with the administrator");
     })
 };
