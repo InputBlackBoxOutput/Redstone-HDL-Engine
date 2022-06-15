@@ -54,10 +54,10 @@ window.onload = () => {
   zoom();
 
   // Resize code textarea
-  col_height = document.getElementById("verilog-code-div").clientHeight - 110;
+  col_height = document.getElementById("verilog-code-div").clientHeight - 95;
   console.log(col_height);
   code.setSize(null, col_height);
-};
 
-// Synthesize
-synthesize_btn.disabled = true;
+  // Disable synthesize button
+  synthesize_btn.disabled = true;
+};

@@ -1,7 +1,6 @@
 body {
   font-family: "Roboto", sans-serif;
   background-color: lightcoral !important;
-  /* background-image: url(images/background.png); */
 }
 
 #redstone-labs {
@@ -16,23 +15,12 @@ textarea {
   resize: none !important;
 }
 
-/* #diagram-canvas-div {
-  background-color: #b4b4b4;
-} */
-
 #diagram-canvas {
   height: 480px;
   background-color: white;
 }
 
-#symbol {
-  width: 100%;
-  height: 100%;
-  object-fit: contain !important;
-}
-
 .img-container {
-  color: red;
   padding: 4px;
   border: 2px solid black;
 }

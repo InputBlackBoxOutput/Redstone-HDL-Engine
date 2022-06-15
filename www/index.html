@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<title> Redstone Labs </title>
+    <title> Redstone Labs </title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<link rel="stylesheet" type="text/css" href="style.css">	
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,6 +17,7 @@
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
 </head>
+
 <body>
     <!-- Handle mobile devices -->
     <script>
@@ -29,21 +32,24 @@
         }
     </script>
 
-	<nav class="navbar navbar-expand-lg navbar-dark bg-light">
-	    <a class="navbar-brand"> 
-            <img src="images/redstone-block.gif" width="40" height="40" class="d-inline-block align-top mr-2" alt="redstone block">
-            <label id="redstone-labs">Redstone Labs</label> 
+    <nav class="navbar navbar-expand-lg navbar-dark bg-light">
+        <a class="navbar-brand">
+            <img src="images/redstone-block.gif" width="40" height="40" class="d-inline-block align-top mr-2"
+                alt="redstone block">
+            <label id="redstone-labs">Redstone Labs</label>
         </a>
-	    <div class="navbar-collapse">
-	        <ul class="navbar-nav ml-auto">
-	            <label class="btn rounded btn-dark mr-1 mt-1 mb-0" data-toggle="modal" data-target="#helpModal"> Help </label>
-	            <label class="btn rounded btn-dark mr-1 mt-1 mb-0" data-toggle="modal" data-target="#aboutModal"> About </label>
-	        </ul>
-	    </div>
-	</nav>
+        <div class="navbar-collapse">
+            <ul class="navbar-nav ml-auto">
+                <label class="btn rounded btn-dark mr-1 mt-1 mb-0" data-toggle="modal" data-target="#helpModal"> Help
+                </label>
+                <label class="btn rounded btn-dark mr-1 mt-1 mb-0" data-toggle="modal" data-target="#aboutModal"> About
+                </label>
+            </ul>
+        </div>
+    </nav>
     <div class="container-fluid my-2 py-2 px-3">
         <div class="row">
-            <div id="verilog-code-div" class="col-lg-6 m-0 p-2"> 
+            <div id="verilog-code-div" class="col-lg-6 m-0 p-2">
                 <label for="verilog-code" class="h5 mb-2"> Verilog code </label>
                 <textarea class="form-control" id="verilog-code"></textarea>
                 <button class="btn btn-block btn-primary mt-2" id="synthesize"> Synthesize </button>
@@ -55,76 +61,61 @@
                 <div class="row mx-1 d-flex justify-content-center img-container" id="diagram-canvas-div">
                     <canvas id='diagram-canvas' hidden="true"></canvas>
                 </div>
-                <div class="row mx-1 mt-3">
-                    <div class="col-4">
-                        <div class="row">
-                            <label for="command-block-code" class="h5"> Symbol </label>
-                        </div>
-                        <div class="row d-flex justify-content-center img-container">
-                            <img src="images/blank.png" id="symbol" alt="symbol">
-                        </div>
-                    </div>
-                    <div class="col-8">
-                        <div class="row ml-1">
-                            <label for="command-block-code" class="h5"> Command block code </label>
-                        </div>
-                        <div class="row ml-1">
-                            <textarea class="form-control" id="command-block-code" rows="5" readonly>Code</textarea>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mx-1 mt-3 alert alert-dark">
-                    scm import link
+                <div class="row mx-1 mt-2">
+                    <label for="command-block-code" class="h5 mb-1"> Command block code </label>
+                    <textarea class="form-control" id="command-block-code" rows="5" readonly></textarea>
+                    <!-- <button class="btn btn-block btn-success mt-1">Download</button> -->
                 </div>
             </div>
         </div>
     </div>
 
     <div class="container-fluid mb-2 p-2">
-        <div class="page-header">
-            <h1> Redstone circuits </h1>
+        <div class="page-header mt-1">
+            <h2> Redstone circuits </h2>
         </div>
         <div class="row justify-content-center m-0 p-2">
             <div class="card m-2" style="width: 18rem;">
-            <img class="card-img-top" src="images/blank.png" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-success btn-block">Go somewhere</a>
-            </div>
-            </div>
-            <div class="card m-2" style="width: 18rem;">
-            <img class="card-img-top" src="images/blank.png" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-success btn-block">Go somewhere</a>
-            </div>
+                <img class="card-img-top" src="images/blank.png" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Contraption 1</h5>
+                    <p class="card-text">Contraption 1 content</p>
+                    <a href="#" class="btn btn-success btn-block">Check out contraption</a>
+                </div>
             </div>
             <div class="card m-2" style="width: 18rem;">
-            <img class="card-img-top" src="images/blank.png" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-success btn-block">Go somewhere</a>
-            </div>
+                <img class="card-img-top" src="images/blank.png" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Contraption 2</h5>
+                    <p class="card-text">Contraption 2 content</p>
+                    <a href="#" class="btn btn-success btn-block">Check out contraption</a>
+                </div>
             </div>
             <div class="card m-2" style="width: 18rem;">
-            <img class="card-img-top" src="images/blank.png" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-success btn-block">Go somewhere</a>
+                <img class="card-img-top" src="images/blank.png" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Contraption 3</h5>
+                    <p class="card-text">Contraption 3 content</p>
+                    <a href="#" class="btn btn-success btn-block">Check out contraption</a>
+                </div>
             </div>
+            <div class="card m-2" style="width: 18rem;">
+                <img class="card-img-top" src="images/blank.png" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Contraption 4</h5>
+                    <p class="card-text">Contraption 4 content</p>
+                    <a href="#" class="btn btn-success btn-block">Check out contraption</a>
+                </div>
             </div>
         </div>
     </div>
-	
+
     <footer>
         <div class="container-fluid">
             <div class="row pt-2">
                 <div id="footer-1" class="col-md-6">
-                    <h6> <a href="terms-and-conditions.html">Terms & Conditions</a> | <a href="privacy-policy.html"> Privacy Policy </a> </h6>
+                    <h6> <a href="terms-and-conditions.html">Terms & Conditions</a> | <a href="privacy-policy.html">
+                            Privacy Policy </a> </h6>
                 </div>
                 <div id="footer-2" class="col-md-6">
                     <h6 class="text-right">Copyright © 2022 InputBlackBoxOutput</h6>
@@ -132,9 +123,9 @@
             </div>
         </div>
     </footer>
-	
-	
-	<!--Help modal-->
+
+
+    <!--Help modal-->
     <div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="globalModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -146,7 +137,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-					Help
+                    Help
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-block btn-danger" data-dismiss="modal">Close</button>
@@ -167,9 +158,9 @@
                     </button>
                 </div>
                 <div class="modal-body">
-					<p></p>
-					<a target="_blank" href="">See repository on GitHub</a>
-					<p>Created by Rutuparn Pawar (InputBlackBoxOutput)</p>
+                    <p></p>
+                    <a target="_blank" href="">See repository on GitHub</a>
+                    <p>Created by Rutuparn Pawar (InputBlackBoxOutput)</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-block btn-danger" data-dismiss="modal">Close</button>
@@ -178,13 +169,18 @@
         </div>
     </div>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.min.css"></link>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.min.css">
+    </link>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/theme/monokai.min.css">
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/mode/verilog/verilog.js"></script>
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.min.js"></script>
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/mode/verilog/verilog.js"></script>
 
-    <script src="https://bitbucket.org/vogdb/canvas-manipulation/raw/7eb148bfe2183f76fe25d5f6460f54d364a5a3ef/dist/canvas-manipulation.min.js"></script>
-    <script src="https://bitbucket.org/vogdb/canvas-manipulation/raw/7eb148bfe2183f76fe25d5f6460f54d364a5a3ef/dist/canvas-manipulation-mouse-listeners.min.js"></script>
+    <script
+        src="https://bitbucket.org/vogdb/canvas-manipulation/raw/7eb148bfe2183f76fe25d5f6460f54d364a5a3ef/dist/canvas-manipulation.min.js"></script>
+    <script
+        src="https://bitbucket.org/vogdb/canvas-manipulation/raw/7eb148bfe2183f76fe25d5f6460f54d364a5a3ef/dist/canvas-manipulation-mouse-listeners.min.js"></script>
 
     <script type="text/javascript" src="https://neilturley.dev/netlistsvg/elk.bundled.js"></script>
     <script type="text/javascript" src="https://neilturley.dev/netlistsvg/built/netlistsvg.bundle.js"></script>
@@ -200,6 +196,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-  </div>
+    </div>
 </body>
+
 </html>
