@@ -1,63 +1,60 @@
 const verilog_code = document.getElementById("verilog-code");
-const canvas_div = document.getElementById("diagram-canvas-div");
-const canvas = document.getElementById("diagram-canvas");
 const synthesize_btn = document.getElementById("synthesize");
+const diagram = document.getElementById("diagram-div");
 
-// Preload image
-var img = new Image();
-img.src = "images/dummy-diagram.png";
+const BACKEND_ENDPOINT = "https://redstone-hdl.herokuapp.com";
 
 // Setup CodeMirror
 verilog_code.value =
   "module m(a,b);\n\tinput a;\n\toutput b;\n\n\twire a = ~b;\nendmodule";
 
-code = CodeMirror.fromTextArea(verilog_code, {
+code_editor = CodeMirror.fromTextArea(verilog_code, {
   lineNumbers: true,
   tabSize: 2,
   mode: "verilog",
   theme: "monokai",
 });
 
-// Setup diagram zoom
-function zoom() {
-  canvas.hidden = false;
-  canvas.width = canvas_div.clientWidth;
-  canvas.height = canvas_div.clientHeight;
 
-  var ctx = canvas.getContext("2d");
-  var control = new CanvasManipulation(
-    canvas,
-    function () {
-      draw(ctx);
-    },
-    { leftTop: { x: 0, y: 0 }, rightBottom: { x: 10000, y: 10000 } }
-  );
-  control.init();
-  control.layout();
-  draw(ctx);
+// Diagram
+function generateDiagram() {
+  var data = "module m(a,b); input a; output b; wire a = ~b; endmodule";
+
+  axios.post('https://redstone-hdl.herokuapp.com/netlist', data,
+    {
+      headers: {
+        'Content-Type': 'text/plain'
+      }
+    })
+    .then(async function (response) {
+      let diagram_svg = await netlistsvg.render(netlistsvg.digitalSkin, { "modules": response.data.output.modules });
+      diagram.innerHTML = diagram_svg;
+    })
+    .catch(function (error) {
+      console.log(error);
+      alert("Something went wrong while generating diagram!");
+    });
 }
 
-function draw(ctx) {
-  ctx.clearCanvas();
-  ctx.drawImage(img, 0, 0);
-
-  // Display text on canvas
-  // ctx.beginPath()
-  // ctx.fillStyle = '#000'
-  // ctx.font = 'bold 80px Arial'
-  // ctx.fillText('Hello, world!', 50, 100)
-  // ctx.closePath()
-}
+// Setup synthesize button
+synthesize_btn.addEventListener('click', () => {
+  generateDiagram();
+})
 
 window.onload = () => {
-  // Enable diagram zoom
-  zoom();
-
   // Resize code textarea
   col_height = document.getElementById("verilog-code-div").clientHeight - 95;
-  console.log(col_height);
-  code.setSize(null, col_height);
+  code_editor.setSize(null, col_height);
 
-  // Disable synthesize button
+  // Connect with backend
   synthesize_btn.disabled = true;
+
+  axios.get(`${BACKEND_ENDPOINT}`)
+    .then(() => {
+      synthesize_btn.disabled = false
+    })
+    .catch((error) => {
+      console.log(error);
+      alert("Unable to connect to backend!");
+    })
 };

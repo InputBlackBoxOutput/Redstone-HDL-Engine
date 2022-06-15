@@ -15,11 +15,6 @@ textarea {
   resize: none !important;
 }
 
-#diagram-canvas {
-  height: 480px;
-  background-color: white;
-}
-
 .img-container {
   padding: 4px;
   border: 2px solid black;

@@ -58,8 +58,8 @@
                 <div class="row mx-1">
                     <label class="h5 mb-2"> Diagram </label>
                 </div>
-                <div class="row mx-1 d-flex justify-content-center img-container" id="diagram-canvas-div">
-                    <canvas id='diagram-canvas' hidden="true"></canvas>
+                <div class="row mx-1 d-flex justify-content-center img-container" id="diagram-div">
+                    <svg id="svg" class="svg" viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet"></svg>
                 </div>
                 <div class="row mx-1 mt-2">
                     <label for="command-block-code" class="h5 mb-1"> Command block code </label>
@@ -176,11 +176,6 @@
         src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.min.js"></script>
     <script type="text/javascript"
         src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/mode/verilog/verilog.js"></script>
-
-    <script
-        src="https://bitbucket.org/vogdb/canvas-manipulation/raw/7eb148bfe2183f76fe25d5f6460f54d364a5a3ef/dist/canvas-manipulation.min.js"></script>
-    <script
-        src="https://bitbucket.org/vogdb/canvas-manipulation/raw/7eb148bfe2183f76fe25d5f6460f54d364a5a3ef/dist/canvas-manipulation-mouse-listeners.min.js"></script>
 
     <script type="text/javascript" src="https://neilturley.dev/netlistsvg/elk.bundled.js"></script>
     <script type="text/javascript" src="https://neilturley.dev/netlistsvg/built/netlistsvg.bundle.js"></script>
