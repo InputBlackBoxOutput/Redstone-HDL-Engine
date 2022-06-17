@@ -1,6 +1,7 @@
 body {
   font-family: "Roboto", sans-serif;
-  background-color: lightcoral !important;
+  /* background-color: lightcoral !important; */
+  background-color: #AFAFAF !important;
 }
 
 #redstone-labs {
