@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <title> Redstone Labs </title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Verilog synthesizer for Minecraft Redstone circuits">
 
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -32,19 +33,19 @@
         }
     </script>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-light">
-        <a class="navbar-brand">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="https://redstone-labs.netlify.app/">
             <img src="images/redstone-block.gif" width="40" height="40" class="d-inline-block align-top mr-2"
                 alt="redstone block">
             <label id="redstone-labs">Redstone Labs</label>
         </a>
         <div class="navbar-collapse">
-            <ul class="navbar-nav ml-auto">
+            <div class="navbar-nav ml-auto">
                 <label class="btn rounded btn-dark mr-1 mt-1 mb-0" id="help"> Help
                 </label>
                 <label class="btn rounded btn-dark mr-1 mt-1 mb-0" id="about"> About
                 </label>
-            </ul>
+            </div>
         </div>
     </nav>
     <div class="container-fluid my-2 py-2 px-3">
@@ -72,13 +73,13 @@
 
     <div class="container-fluid mb-2 p-2">
         <div class="page-header mt-1">
-            <h2> Redstone circuits </h2>
+            <label class="h2"> Redstone circuits </label>
         </div>
         <div class="row justify-content-center m-0 p-2">
             <div class="card m-2" style="width: 18rem;">
                 <img class="card-img-top" src="images/blank.png" alt="Card image cap">
                 <div class="card-body">
-                    <h5 class="card-title">Contraption 1</h5>
+                    <label class="h5 card-title">Contraption 1</label>
                     <p class="card-text">Contraption 1 content</p>
                     <a href="#" class="btn btn-success btn-block">Check out contraption</a>
                 </div>
@@ -86,7 +87,7 @@
             <div class="card m-2" style="width: 18rem;">
                 <img class="card-img-top" src="images/blank.png" alt="Card image cap">
                 <div class="card-body">
-                    <h5 class="card-title">Contraption 2</h5>
+                    <label class="h5 card-title">Contraption 2</label>
                     <p class="card-text">Contraption 2 content</p>
                     <a href="#" class="btn btn-success btn-block">Check out contraption</a>
                 </div>
@@ -94,7 +95,7 @@
             <div class="card m-2" style="width: 18rem;">
                 <img class="card-img-top" src="images/blank.png" alt="Card image cap">
                 <div class="card-body">
-                    <h5 class="card-title">Contraption 3</h5>
+                    <label class="h5 card-title">Contraption 3</label>
                     <p class="card-text">Contraption 3 content</p>
                     <a href="#" class="btn btn-success btn-block">Check out contraption</a>
                 </div>
@@ -102,7 +103,7 @@
             <div class="card m-2" style="width: 18rem;">
                 <img class="card-img-top" src="images/blank.png" alt="Card image cap">
                 <div class="card-body">
-                    <h5 class="card-title">Contraption 4</h5>
+                    <label class="h5 card-title">Contraption 4</label>
                     <p class="card-text">Contraption 4 content</p>
                     <a href="#" class="btn btn-success btn-block">Check out contraption</a>
                 </div>
@@ -114,8 +115,10 @@
         <div class="container-fluid">
             <div class="row pt-2">
                 <div id="footer-1" class="col-md-6">
-                    <h6> <a href="terms-and-conditions.html">Terms & Conditions</a> | <a href="privacy-policy.html">
-                            Privacy Policy </a> </h6>
+                    <h6>
+                        <a href="terms-and-conditions.html">Terms & Conditions</a> |
+                        <a href="privacy-policy.html"> Privacy Policy </a>
+                    </h6>
                 </div>
                 <div id="footer-2" class="col-md-6">
                     <h6 class="text-right">Copyright © 2022 InputBlackBoxOutput</h6>
@@ -154,8 +157,8 @@
     <script type="text/javascript"
         src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/mode/verilog/verilog.js"></script>
 
-    <script type="text/javascript" src="https://neilturley.dev/netlistsvg/elk.bundled.js"></script>
-    <script type="text/javascript" src="https://neilturley.dev/netlistsvg/built/netlistsvg.bundle.js"></script>
+    <script defer type="text/javascript" src="https://neilturley.dev/netlistsvg/elk.bundled.js"></script>
+    <script defer type="text/javascript" src="https://neilturley.dev/netlistsvg/built/netlistsvg.bundle.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script type="text/javascript" src="index.js"></script>
 
