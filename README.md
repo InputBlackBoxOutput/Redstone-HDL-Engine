@@ -4,11 +4,16 @@
 <img width="640" alt="warning" src="https://user-images.githubusercontent.com/53337979/151096760-3ace455e-da62-4914-a76f-c5dc14217243.png">
 
 ## Useful links
-- https://minecraft.fandom.com/wiki/Redstone_circuits/Logic
-- https://minecraft.fandom.com/wiki/Command_Block
-- https://www.curseforge.com/minecraft/mc-mods/super-circuit-maker
-- https://personal.utdallas.edu/~xxx110230/verilog/
-- https://www.edaplayground.com/
+* Minecraft redstone
+  - https://minecraft.fandom.com/wiki/Redstone_circuits/Logic
+  - https://minecraft.fandom.com/wiki/Command_Block
+  - https://www.curseforge.com/minecraft/mc-mods/super-circuit-maker
+
+* Verilog
+  - https://personal.utdallas.edu/~xxx110230/verilog/
+  - https://www.edaplayground.com/
+  - http://www.asic-world.com/verilog/veritut.html
+  - https://www.fpga4fun.com/
 
 ## Future development
 - Add drag and drop coding features using [visual verilog](https://github.com/MarwanYoussef/Visual-Verilog) 
