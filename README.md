@@ -14,6 +14,7 @@
   - https://www.edaplayground.com/
   - http://www.asic-world.com/verilog/veritut.html
   - https://www.fpga4fun.com/
+  - https://www.chipverify.com/
 
 ## Future development
 - Add drag and drop coding features using [visual verilog](https://github.com/MarwanYoussef/Visual-Verilog) 
