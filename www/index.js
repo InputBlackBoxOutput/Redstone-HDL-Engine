@@ -1,34 +1,48 @@
 const verilog_code = document.getElementById("verilog-code");
+const success_alert = document.getElementById("success");
+const fail_alert = document.getElementById("fail");
 const synthesize_btn = document.getElementById("synthesize");
 const diagram = document.getElementById("diagram-div");
 
-const BACKEND_ENDPOINT = "https://redstone-hdl.herokuapp.com";
+// const BACKEND_ENDPOINT = "https://redstone-hdl.herokuapp.com";
+const BACKEND_ENDPOINT = "http://localhost:5000";
 
 // Setup CodeMirror
-verilog_code.value =
-  "module m(a,b);\n\tinput a;\n\toutput b;\n\n\twire a = ~b;\nendmodule";
+verilog_code.value = "module m(a,b);\n\tinput a;\n\toutput b;\n\n\tassign b = ~a;\nendmodule";
 
 code_editor = CodeMirror.fromTextArea(verilog_code, {
   lineNumbers: true,
   tabSize: 2,
   mode: "verilog",
-  theme: "monokai",
+  theme: "xq-light",
 });
 
+code_editor.on('change', function () {
+  success_alert.hidden = true;
+  fail_alert.hidden = true;
+});
 
-// Diagram
-function generateDiagram() {
-  var data = "module m(a,b); input a; output b; wire a = ~b; endmodule";
-
-  axios.post('https://redstone-hdl.herokuapp.com/netlist', data,
+function generateDiagram(code) {
+  axios.post(`${BACKEND_ENDPOINT}/netlist`, code,
     {
       headers: {
         'Content-Type': 'text/plain'
       }
     })
     .then(async function (response) {
-      let diagram_svg = await netlistsvg.render(netlistsvg.digitalSkin, { "modules": response.data.output.modules });
-      diagram.innerHTML = diagram_svg;
+      if (response.data.error) {
+        diagram.innerHTML = "<svg></svg>";
+        success_alert.hidden = true;
+
+        fail_alert.innerText = `Synthesis failed: ${response.data.error}`;
+        fail_alert.hidden = false;
+      }
+      else {
+        let diagram_svg = await netlistsvg.render(netlistsvg.digitalSkin, { "modules": response.data.output.modules });
+        diagram.innerHTML = diagram_svg;
+        success_alert.hidden = false;
+        fail_alert.hidden = true;
+      }
     })
     .catch(function (error) {
       console.log(error);
@@ -38,7 +52,8 @@ function generateDiagram() {
 
 // Setup synthesize button
 synthesize_btn.addEventListener('click', () => {
-  generateDiagram();
+  let code = code_editor.getValue('\n');
+  generateDiagram(code);
 })
 
 // Generic modal

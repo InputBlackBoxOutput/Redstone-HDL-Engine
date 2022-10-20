@@ -16,6 +16,10 @@ textarea {
   resize: none !important;
 }
 
+.CodeMirror {
+  border: 2px solid black;
+}
+
 .img-container {
   padding: 4px;
   border: 2px solid black;
