@@ -3,6 +3,7 @@ const success_alert = document.getElementById("success");
 const fail_alert = document.getElementById("fail");
 const synthesize_btn = document.getElementById("synthesize");
 const diagram = document.getElementById("diagram-div");
+const command_block_code = document.getElementById("command-block-code");
 
 // const BACKEND_ENDPOINT = "https://redstone-hdl.herokuapp.com";
 const BACKEND_ENDPOINT = "http://localhost:5000";
@@ -21,6 +22,29 @@ code_editor.on('change', function () {
   success_alert.hidden = true;
   fail_alert.hidden = true;
 });
+
+function generateCode(code) {
+  if (fail_alert.hidden == false) {
+    return;
+  }
+
+  axios.post(`${BACKEND_ENDPOINT}/synthesize`, code,
+    {
+      headers: {
+        'Content-Type': 'text/plain'
+      }
+    })
+    .then(async function (response) {
+      command_block_code.value = response.data.output;
+    })
+    .catch(function (error) {
+      console.log(error);
+      displayMessageViaModal(
+        "Something went wrong!",
+        "An error occurred while generating the code."
+      );
+    });
+}
 
 function generateDiagram(code) {
   axios.post(`${BACKEND_ENDPOINT}/netlist`, code,
@@ -46,14 +70,18 @@ function generateDiagram(code) {
     })
     .catch(function (error) {
       console.log(error);
-      displayMessageViaModal("Something went wrong!", "An error occurred while generating the diagram.");
+      displayMessageViaModal(
+        "Something went wrong!",
+        "An error occurred while generating the diagram."
+      );
     });
 }
 
 // Setup synthesize button
-synthesize_btn.addEventListener('click', () => {
+synthesize_btn.addEventListener('click', async () => {
   let code = code_editor.getValue('\n');
-  generateDiagram(code);
+  await generateDiagram(code);
+  await generateCode(code);
 })
 
 // Generic modal

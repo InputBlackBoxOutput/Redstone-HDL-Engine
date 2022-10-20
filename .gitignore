@@ -154,4 +154,4 @@ cython_debug/
 
 # Additional
 /ignore
-verilog.v
+verilog_*.v
