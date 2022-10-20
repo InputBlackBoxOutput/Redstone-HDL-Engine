@@ -8,7 +8,6 @@ importlib-metadata==4.10.0
 itsdangerous==2.0.1
 Jinja2==3.0.3
 MarkupSafe==2.0.1
-minecraft-data==2.100.0
 NBT==1.5.1
 opencv-python==4.5.5.62
 pymongo==4.0.1
