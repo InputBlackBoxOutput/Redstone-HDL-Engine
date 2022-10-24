@@ -27,6 +27,7 @@
                 "$abc$50$auto$blifparse.cc:371:parse_blif$51": {
                     "hide_name": 1,
                     "type": "$_NAND_",
+                    "model": "$_NAND_",
                     "parameters": {},
                     "attributes": {},
                     "port_directions": {
@@ -49,6 +50,7 @@
                 "$abc$50$auto$blifparse.cc:371:parse_blif$52": {
                     "hide_name": 1,
                     "type": "$_ANDNOT_",
+                    "model": "$_ANDNOT_",
                     "parameters": {},
                     "attributes": {},
                     "port_directions": {
@@ -101,5 +103,45 @@
                 }
             }
         }
+    },
+    "models": {
+        "$_ANDNOT_": [
+            [
+                "port",
+                "A",
+                0
+            ],
+            [
+                "nport",
+                "B",
+                0
+            ],
+            [
+                "and",
+                0,
+                1,
+                "Y",
+                0
+            ]
+        ],
+        "$_NAND_": [
+            [
+                "port",
+                "A",
+                0
+            ],
+            [
+                "port",
+                "B",
+                0
+            ],
+            [
+                "nand",
+                0,
+                1,
+                "Y",
+                0
+            ]
+        ]
     }
 }

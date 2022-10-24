@@ -53,6 +53,7 @@
                 "$abc$95$auto$blifparse.cc:371:parse_blif$100": {
                     "hide_name": 1,
                     "type": "$_ORNOT_",
+                    "model": "$_ORNOT_",
                     "parameters": {},
                     "attributes": {},
                     "port_directions": {
@@ -75,6 +76,7 @@
                 "$abc$95$auto$blifparse.cc:371:parse_blif$101": {
                     "hide_name": 1,
                     "type": "$_NAND_",
+                    "model": "$_NAND_",
                     "parameters": {},
                     "attributes": {},
                     "port_directions": {
@@ -97,6 +99,7 @@
                 "$abc$95$auto$blifparse.cc:371:parse_blif$102": {
                     "hide_name": 1,
                     "type": "$_AOI3_",
+                    "model": "$_AOI3_",
                     "parameters": {},
                     "attributes": {},
                     "port_directions": {
@@ -123,6 +126,7 @@
                 "$abc$95$auto$blifparse.cc:371:parse_blif$103": {
                     "hide_name": 1,
                     "type": "$_AND_",
+                    "model": "$_AND_",
                     "parameters": {},
                     "attributes": {},
                     "port_directions": {
@@ -145,6 +149,7 @@
                 "$abc$95$auto$blifparse.cc:371:parse_blif$96": {
                     "hide_name": 1,
                     "type": "$_XNOR_",
+                    "model": "$_XNOR_",
                     "parameters": {},
                     "attributes": {},
                     "port_directions": {
@@ -167,6 +172,7 @@
                 "$abc$95$auto$blifparse.cc:371:parse_blif$97": {
                     "hide_name": 1,
                     "type": "$_XNOR_",
+                    "model": "$_XNOR_",
                     "parameters": {},
                     "attributes": {},
                     "port_directions": {
@@ -189,6 +195,7 @@
                 "$abc$95$auto$blifparse.cc:371:parse_blif$98": {
                     "hide_name": 1,
                     "type": "$_AND_",
+                    "model": "$_AND_",
                     "parameters": {},
                     "attributes": {},
                     "port_directions": {
@@ -211,6 +218,7 @@
                 "$abc$95$auto$blifparse.cc:371:parse_blif$99": {
                     "hide_name": 1,
                     "type": "$_ORNOT_",
+                    "model": "$_ORNOT_",
                     "parameters": {},
                     "attributes": {},
                     "port_directions": {
@@ -332,5 +340,132 @@
                 }
             }
         }
+    },
+    "models": {
+        "$_XNOR_": [
+            [
+                "port",
+                "A",
+                0
+            ],
+            [
+                "port",
+                "B",
+                0
+            ],
+            [
+                "nport",
+                "B",
+                0
+            ],
+            [
+                "nport",
+                "A",
+                0
+            ],
+            [
+                "nand",
+                2,
+                3
+            ],
+            [
+                "nand",
+                0,
+                1
+            ],
+            [
+                "nand",
+                4,
+                5,
+                "Y",
+                0
+            ]
+        ],
+        "$_AND_": [
+            [
+                "port",
+                "A",
+                0
+            ],
+            [
+                "port",
+                "B",
+                0
+            ],
+            [
+                "and",
+                0,
+                1,
+                "Y",
+                0
+            ]
+        ],
+        "$_AOI3_": [
+            [
+                "port",
+                "A",
+                0
+            ],
+            [
+                "port",
+                "B",
+                0
+            ],
+            [
+                "nport",
+                "C",
+                0
+            ],
+            [
+                "nand",
+                0,
+                1
+            ],
+            [
+                "and",
+                2,
+                3,
+                "Y",
+                0
+            ]
+        ],
+        "$_NAND_": [
+            [
+                "port",
+                "A",
+                0
+            ],
+            [
+                "port",
+                "B",
+                0
+            ],
+            [
+                "nand",
+                0,
+                1,
+                "Y",
+                0
+            ]
+        ],
+        "$_ORNOT_": [
+            [
+                "port",
+                "B",
+                0
+            ],
+            [
+                "nport",
+                "A",
+                0
+            ],
+            [
+                "nand",
+                0,
+                1,
+                "Y",
+                0
+            ]
+        ]
     }
 }

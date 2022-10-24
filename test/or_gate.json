@@ -25,6 +25,7 @@
                 "$abc$47$auto$blifparse.cc:371:parse_blif$48": {
                     "hide_name": 1,
                     "type": "$_OR_",
+                    "model": "$_OR_",
                     "parameters": {},
                     "attributes": {},
                     "port_directions": {
@@ -68,5 +69,26 @@
                 }
             }
         }
+    },
+    "models": {
+        "$_OR_": [
+            [
+                "nport",
+                "B",
+                0
+            ],
+            [
+                "nport",
+                "A",
+                0
+            ],
+            [
+                "nand",
+                0,
+                1,
+                "Y",
+                0
+            ]
+        ]
     }
 }

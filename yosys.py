@@ -31,7 +31,7 @@ class Yosys:
 
         # Interact with yosys
         output, error = self.yosys.communicate(
-            f"read_verilog {filepath} \nread_verilog - lib ./yosys/std.v \nsynth \ndfflibmap - liberty ./yosys/std.lib \nabc - liberty ./yosys/std.lib \nopt_clean \njson")
+            f"read_verilog {filepath} \nread_verilog - lib ./yosys/std.v \nsynth \ndfflibmap - liberty ./yosys/std.lib \nabc - liberty ./yosys/std.lib \nopt_clean \njson -aig")
 
         if (error != ""):
             return (1, error)

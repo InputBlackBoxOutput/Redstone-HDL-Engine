@@ -29,6 +29,7 @@
                 "$abc$47$auto$blifparse.cc:371:parse_blif$48": {
                     "hide_name": 1,
                     "type": "$_AND_",
+                    "model": "$_AND_",
                     "parameters": {},
                     "attributes": {},
                     "port_directions": {
@@ -79,5 +80,26 @@
                 }
             }
         }
+    },
+    "models": {
+        "$_AND_": [
+            [
+                "port",
+                "A",
+                0
+            ],
+            [
+                "port",
+                "B",
+                0
+            ],
+            [
+                "and",
+                0,
+                1,
+                "Y",
+                0
+            ]
+        ]
     }
 }
