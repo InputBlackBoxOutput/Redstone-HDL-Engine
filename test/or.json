@@ -1,9 +1,9 @@
 {
     "creator": "Yosys 0.9 (git sha1 1979e0b)",
     "modules": {
-        "or_gate": {
+        "_or": {
             "attributes": {
-                "src": "test/or_gate.v:1"
+                "src": "test/or.v:1"
             },
             "ports": {
                 "X": {
@@ -55,7 +55,7 @@
                     ],
                     "upto": 1,
                     "attributes": {
-                        "src": "test/or_gate.v:2"
+                        "src": "test/or.v:2"
                     }
                 },
                 "Y": {
@@ -64,7 +64,7 @@
                         4
                     ],
                     "attributes": {
-                        "src": "test/or_gate.v:3"
+                        "src": "test/or.v:3"
                     }
                 }
             }

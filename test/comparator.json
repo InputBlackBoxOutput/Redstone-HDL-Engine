@@ -3,30 +3,20 @@
     "modules": {
         "comparator": {
             "attributes": {
-                "src": "test/comparator_2bit.v:1"
+                "src": "test/comparator.v:1"
             },
             "ports": {
-                "A0": {
+                "A": {
                     "direction": "input",
                     "bits": [
-                        2
-                    ]
-                },
-                "A1": {
-                    "direction": "input",
-                    "bits": [
+                        2,
                         3
                     ]
                 },
-                "B0": {
+                "B": {
                     "direction": "input",
                     "bits": [
-                        4
-                    ]
-                },
-                "B1": {
-                    "direction": "input",
-                    "bits": [
+                        4,
                         5
                     ]
                 },
@@ -275,40 +265,24 @@
                     ],
                     "attributes": {}
                 },
-                "A0": {
+                "A": {
                     "hide_name": 0,
                     "bits": [
-                        2
-                    ],
-                    "attributes": {
-                        "src": "test/comparator_2bit.v:2"
-                    }
-                },
-                "A1": {
-                    "hide_name": 0,
-                    "bits": [
+                        2,
                         3
                     ],
                     "attributes": {
-                        "src": "test/comparator_2bit.v:2"
+                        "src": "test/comparator.v:2"
                     }
                 },
-                "B0": {
+                "B": {
                     "hide_name": 0,
                     "bits": [
-                        4
-                    ],
-                    "attributes": {
-                        "src": "test/comparator_2bit.v:2"
-                    }
-                },
-                "B1": {
-                    "hide_name": 0,
-                    "bits": [
+                        4,
                         5
                     ],
                     "attributes": {
-                        "src": "test/comparator_2bit.v:2"
+                        "src": "test/comparator.v:2"
                     }
                 },
                 "E": {
@@ -317,7 +291,7 @@
                         7
                     ],
                     "attributes": {
-                        "src": "test/comparator_2bit.v:3"
+                        "src": "test/comparator.v:3"
                     }
                 },
                 "G": {
@@ -326,7 +300,7 @@
                         6
                     ],
                     "attributes": {
-                        "src": "test/comparator_2bit.v:3"
+                        "src": "test/comparator.v:3"
                     }
                 },
                 "L": {
@@ -335,7 +309,7 @@
                         8
                     ],
                     "attributes": {
-                        "src": "test/comparator_2bit.v:3"
+                        "src": "test/comparator.v:3"
                     }
                 }
             }

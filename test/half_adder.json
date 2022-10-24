@@ -1,30 +1,30 @@
 {
     "creator": "Yosys 0.9 (git sha1 1979e0b)",
     "modules": {
-        "m21": {
+        "half_adder": {
             "attributes": {
-                "src": "test/2x1_mux.v:1"
+                "src": "test/half_adder.v:1"
             },
             "ports": {
-                "D0": {
+                "A": {
                     "direction": "input",
                     "bits": [
                         2
                     ]
                 },
-                "D1": {
+                "B": {
                     "direction": "input",
                     "bits": [
                         3
                     ]
                 },
                 "S": {
-                    "direction": "input",
+                    "direction": "output",
                     "bits": [
                         4
                     ]
                 },
-                "Y": {
+                "C": {
                     "direction": "output",
                     "bits": [
                         5
@@ -32,51 +32,79 @@
                 }
             },
             "cells": {
-                "$abc$47$auto$blifparse.cc:371:parse_blif$48": {
+                "$abc$49$auto$blifparse.cc:371:parse_blif$50": {
                     "hide_name": 1,
-                    "type": "$_MUX_",
-                    "model": "$_MUX_",
+                    "type": "$_AND_",
+                    "model": "$_AND_",
                     "parameters": {},
                     "attributes": {},
                     "port_directions": {
                         "A": "input",
                         "B": "input",
-                        "S": "input",
                         "Y": "output"
                     },
                     "connections": {
                         "A": [
-                            2
-                        ],
-                        "B": [
                             3
                         ],
-                        "S": [
-                            4
+                        "B": [
+                            2
                         ],
                         "Y": [
                             5
                         ]
                     }
+                },
+                "$abc$49$auto$blifparse.cc:371:parse_blif$51": {
+                    "hide_name": 1,
+                    "type": "$_XOR_",
+                    "model": "$_XOR_",
+                    "parameters": {},
+                    "attributes": {},
+                    "port_directions": {
+                        "A": "input",
+                        "B": "input",
+                        "Y": "output"
+                    },
+                    "connections": {
+                        "A": [
+                            3
+                        ],
+                        "B": [
+                            2
+                        ],
+                        "Y": [
+                            4
+                        ]
+                    }
                 }
             },
             "netnames": {
-                "D0": {
+                "A": {
                     "hide_name": 0,
                     "bits": [
                         2
                     ],
                     "attributes": {
-                        "src": "test/2x1_mux.v:4"
+                        "src": "test/half_adder.v:2"
                     }
                 },
-                "D1": {
+                "B": {
                     "hide_name": 0,
                     "bits": [
                         3
                     ],
                     "attributes": {
-                        "src": "test/2x1_mux.v:4"
+                        "src": "test/half_adder.v:2"
+                    }
+                },
+                "C": {
+                    "hide_name": 0,
+                    "bits": [
+                        5
+                    ],
+                    "attributes": {
+                        "src": "test/half_adder.v:3"
                     }
                 },
                 "S": {
@@ -85,28 +113,14 @@
                         4
                     ],
                     "attributes": {
-                        "src": "test/2x1_mux.v:4"
-                    }
-                },
-                "Y": {
-                    "hide_name": 0,
-                    "bits": [
-                        5
-                    ],
-                    "attributes": {
-                        "src": "test/2x1_mux.v:3"
+                        "src": "test/half_adder.v:3"
                     }
                 }
             }
         }
     },
     "models": {
-        "$_MUX_": [
-            [
-                "port",
-                "S",
-                0
-            ],
+        "$_XOR_": [
             [
                 "port",
                 "A",
@@ -119,23 +133,47 @@
             ],
             [
                 "nport",
-                "S",
+                "B",
+                0
+            ],
+            [
+                "nport",
+                "A",
                 0
             ],
             [
                 "nand",
-                0,
-                2
-            ],
-            [
-                "nand",
-                1,
+                2,
                 3
             ],
             [
                 "nand",
+                0,
+                1
+            ],
+            [
+                "and",
                 4,
                 5,
+                "Y",
+                0
+            ]
+        ],
+        "$_AND_": [
+            [
+                "port",
+                "A",
+                0
+            ],
+            [
+                "port",
+                "B",
+                0
+            ],
+            [
+                "and",
+                0,
+                1,
                 "Y",
                 0
             ]

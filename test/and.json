@@ -1,20 +1,15 @@
 {
     "creator": "Yosys 0.9 (git sha1 1979e0b)",
     "modules": {
-        "and_gate": {
+        "_and": {
             "attributes": {
-                "src": "test/and_gate.v:1"
+                "src": "test/and.v:1"
             },
             "ports": {
-                "A": {
+                "X": {
                     "direction": "input",
                     "bits": [
-                        2
-                    ]
-                },
-                "B": {
-                    "direction": "input",
-                    "bits": [
+                        2,
                         3
                     ]
                 },
@@ -51,22 +46,14 @@
                 }
             },
             "netnames": {
-                "A": {
+                "X": {
                     "hide_name": 0,
                     "bits": [
-                        2
-                    ],
-                    "attributes": {
-                        "src": "test/and_gate.v:2"
-                    }
-                },
-                "B": {
-                    "hide_name": 0,
-                    "bits": [
+                        2,
                         3
                     ],
                     "attributes": {
-                        "src": "test/and_gate.v:2"
+                        "src": "test/and.v:2"
                     }
                 },
                 "Y": {
@@ -75,7 +62,7 @@
                         4
                     ],
                     "attributes": {
-                        "src": "test/and_gate.v:3"
+                        "src": "test/and.v:3"
                     }
                 }
             }
