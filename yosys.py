@@ -53,7 +53,7 @@ class Yosys:
 
 
 if __name__ == '__main__':
-    # verilog_file = "test/2x1_mux.v"
+    # verilog_file = "test/mux.v"
     # y = Yosys()
     # output = y.process(verilog_file)
     # print(output)
