@@ -1,10 +1,9 @@
 {
-    "creator": "Yosys 0.9 (git sha1 1979e0b1, i686-w64-mingw32.static-g++ 5.5.0 -Os)",
+    "creator": "Yosys 0.9 (git sha1 1979e0b)",
     "modules": {
         "comparator": {
             "attributes": {
-                "cells_not_processed": 1,
-                "src": "test\\comparator_2bit.v:1"
+                "src": "test/comparator_2bit.v:1"
             },
             "ports": {
                 "A0": {
@@ -51,20 +50,11 @@
                 }
             },
             "cells": {
-                "$eq$test\\comparator_2bit.v:10$4": {
+                "$abc$95$auto$blifparse.cc:371:parse_blif$100": {
                     "hide_name": 1,
-                    "type": "$eq",
-                    "model": "$eq:0:2U:2:1",
-                    "parameters": {
-                        "B_SIGNED": 0,
-                        "A_SIGNED": 0,
-                        "A_WIDTH": 2,
-                        "B_WIDTH": 2,
-                        "Y_WIDTH": 1
-                    },
-                    "attributes": {
-                        "src": "test\\comparator_2bit.v:10"
-                    },
+                    "type": "$_ORNOT_",
+                    "parameters": {},
+                    "attributes": {},
                     "port_directions": {
                         "A": "input",
                         "B": "input",
@@ -72,31 +62,21 @@
                     },
                     "connections": {
                         "A": [
-                            2,
-                            3
+                            2
                         ],
                         "B": [
-                            4,
-                            5
+                            4
                         ],
                         "Y": [
                             9
                         ]
                     }
                 },
-                "$gt$test\\comparator_2bit.v:9$3": {
+                "$abc$95$auto$blifparse.cc:371:parse_blif$101": {
                     "hide_name": 1,
-                    "type": "$gt",
-                    "parameters": {
-                        "B_SIGNED": 0,
-                        "A_SIGNED": 0,
-                        "A_WIDTH": 2,
-                        "B_WIDTH": 2,
-                        "Y_WIDTH": 1
-                    },
-                    "attributes": {
-                        "src": "test\\comparator_2bit.v:9"
-                    },
+                    "type": "$_NAND_",
+                    "parameters": {},
+                    "attributes": {},
                     "port_directions": {
                         "A": "input",
                         "B": "input",
@@ -104,11 +84,79 @@
                     },
                     "connections": {
                         "A": [
-                            2,
+                            9
+                        ],
+                        "B": [
+                            10
+                        ],
+                        "Y": [
+                            11
+                        ]
+                    }
+                },
+                "$abc$95$auto$blifparse.cc:371:parse_blif$102": {
+                    "hide_name": 1,
+                    "type": "$_AOI3_",
+                    "parameters": {},
+                    "attributes": {},
+                    "port_directions": {
+                        "A": "input",
+                        "B": "input",
+                        "C": "input",
+                        "Y": "output"
+                    },
+                    "connections": {
+                        "A": [
+                            11
+                        ],
+                        "B": [
+                            12
+                        ],
+                        "C": [
+                            7
+                        ],
+                        "Y": [
+                            6
+                        ]
+                    }
+                },
+                "$abc$95$auto$blifparse.cc:371:parse_blif$103": {
+                    "hide_name": 1,
+                    "type": "$_AND_",
+                    "parameters": {},
+                    "attributes": {},
+                    "port_directions": {
+                        "A": "input",
+                        "B": "input",
+                        "Y": "output"
+                    },
+                    "connections": {
+                        "A": [
+                            11
+                        ],
+                        "B": [
+                            12
+                        ],
+                        "Y": [
+                            8
+                        ]
+                    }
+                },
+                "$abc$95$auto$blifparse.cc:371:parse_blif$96": {
+                    "hide_name": 1,
+                    "type": "$_XNOR_",
+                    "parameters": {},
+                    "attributes": {},
+                    "port_directions": {
+                        "A": "input",
+                        "B": "input",
+                        "Y": "output"
+                    },
+                    "connections": {
+                        "A": [
                             3
                         ],
                         "B": [
-                            4,
                             5
                         ],
                         "Y": [
@@ -116,19 +164,11 @@
                         ]
                     }
                 },
-                "$lt$test\\comparator_2bit.v:8$2": {
+                "$abc$95$auto$blifparse.cc:371:parse_blif$97": {
                     "hide_name": 1,
-                    "type": "$lt",
-                    "parameters": {
-                        "B_SIGNED": 0,
-                        "A_SIGNED": 0,
-                        "A_WIDTH": 2,
-                        "B_WIDTH": 2,
-                        "Y_WIDTH": 1
-                    },
-                    "attributes": {
-                        "src": "test\\comparator_2bit.v:8"
-                    },
+                    "type": "$_XNOR_",
+                    "parameters": {},
+                    "attributes": {},
                     "port_directions": {
                         "A": "input",
                         "B": "input",
@@ -136,73 +176,96 @@
                     },
                     "connections": {
                         "A": [
-                            2,
-                            3
+                            2
                         ],
                         "B": [
-                            4,
-                            5
+                            4
                         ],
                         "Y": [
-                            11
+                            13
+                        ]
+                    }
+                },
+                "$abc$95$auto$blifparse.cc:371:parse_blif$98": {
+                    "hide_name": 1,
+                    "type": "$_AND_",
+                    "parameters": {},
+                    "attributes": {},
+                    "port_directions": {
+                        "A": "input",
+                        "B": "input",
+                        "Y": "output"
+                    },
+                    "connections": {
+                        "A": [
+                            13
+                        ],
+                        "B": [
+                            10
+                        ],
+                        "Y": [
+                            7
+                        ]
+                    }
+                },
+                "$abc$95$auto$blifparse.cc:371:parse_blif$99": {
+                    "hide_name": 1,
+                    "type": "$_ORNOT_",
+                    "parameters": {},
+                    "attributes": {},
+                    "port_directions": {
+                        "A": "input",
+                        "B": "input",
+                        "Y": "output"
+                    },
+                    "connections": {
+                        "A": [
+                            5
+                        ],
+                        "B": [
+                            3
+                        ],
+                        "Y": [
+                            12
                         ]
                     }
                 }
             },
             "netnames": {
-                "$0\\E[0:0]": {
+                "$abc$95$new_n11_": {
                     "hide_name": 1,
                     "bits": [
                         12
                     ],
-                    "attributes": {
-                        "src": "test\\comparator_2bit.v:6"
-                    }
+                    "attributes": {}
                 },
-                "$0\\G[0:0]": {
-                    "hide_name": 1,
-                    "bits": [
-                        13
-                    ],
-                    "attributes": {
-                        "src": "test\\comparator_2bit.v:6"
-                    }
-                },
-                "$0\\L[0:0]": {
-                    "hide_name": 1,
-                    "bits": [
-                        14
-                    ],
-                    "attributes": {
-                        "src": "test\\comparator_2bit.v:6"
-                    }
-                },
-                "$eq$test\\comparator_2bit.v:10$4_Y": {
+                "$abc$95$new_n12_": {
                     "hide_name": 1,
                     "bits": [
                         9
                     ],
-                    "attributes": {
-                        "src": "test\\comparator_2bit.v:10"
-                    }
+                    "attributes": {}
                 },
-                "$gt$test\\comparator_2bit.v:9$3_Y": {
-                    "hide_name": 1,
-                    "bits": [
-                        10
-                    ],
-                    "attributes": {
-                        "src": "test\\comparator_2bit.v:9"
-                    }
-                },
-                "$lt$test\\comparator_2bit.v:8$2_Y": {
+                "$abc$95$new_n13_": {
                     "hide_name": 1,
                     "bits": [
                         11
                     ],
-                    "attributes": {
-                        "src": "test\\comparator_2bit.v:8"
-                    }
+                    "attributes": {}
+                },
+                "$abc$95$new_n8_": {
+                    "hide_name": 1,
+                    "bits": [
+                        10
+                    ],
+                    "attributes": {}
+                },
+                "$abc$95$new_n9_": {
+                    "hide_name": 1,
+                    "bits": [
+                        13
+                    ],
+                    "attributes": {}
                 },
                 "A0": {
                     "hide_name": 0,
@@ -210,7 +273,7 @@
                         2
                     ],
                     "attributes": {
-                        "src": "test\\comparator_2bit.v:2"
+                        "src": "test/comparator_2bit.v:2"
                     }
                 },
                 "A1": {
@@ -219,7 +282,7 @@
                         3
                     ],
                     "attributes": {
-                        "src": "test\\comparator_2bit.v:2"
+                        "src": "test/comparator_2bit.v:2"
                     }
                 },
                 "B0": {
@@ -228,7 +291,7 @@
                         4
                     ],
                     "attributes": {
-                        "src": "test\\comparator_2bit.v:2"
+                        "src": "test/comparator_2bit.v:2"
                     }
                 },
                 "B1": {
@@ -237,7 +300,7 @@
                         5
                     ],
                     "attributes": {
-                        "src": "test\\comparator_2bit.v:2"
+                        "src": "test/comparator_2bit.v:2"
                     }
                 },
                 "E": {
@@ -246,7 +309,7 @@
                         7
                     ],
                     "attributes": {
-                        "src": "test\\comparator_2bit.v:3"
+                        "src": "test/comparator_2bit.v:3"
                     }
                 },
                 "G": {
@@ -255,7 +318,7 @@
                         6
                     ],
                     "attributes": {
-                        "src": "test\\comparator_2bit.v:3"
+                        "src": "test/comparator_2bit.v:3"
                     }
                 },
                 "L": {
@@ -264,91 +327,10 @@
                         8
                     ],
                     "attributes": {
-                        "src": "test\\comparator_2bit.v:3"
+                        "src": "test/comparator_2bit.v:3"
                     }
                 }
             }
         }
-    },
-    "models": {
-        "$eq:0:2U:2:1": [
-            [
-                "port",
-                "A",
-                0
-            ],
-            [
-                "port",
-                "A",
-                1
-            ],
-            [
-                "port",
-                "B",
-                0
-            ],
-            [
-                "port",
-                "B",
-                1
-            ],
-            [
-                "nport",
-                "B",
-                0
-            ],
-            [
-                "nport",
-                "A",
-                0
-            ],
-            [
-                "nand",
-                4,
-                5
-            ],
-            [
-                "nand",
-                0,
-                2
-            ],
-            [
-                "nand",
-                6,
-                7
-            ],
-            [
-                "nport",
-                "B",
-                1
-            ],
-            [
-                "nport",
-                "A",
-                1
-            ],
-            [
-                "nand",
-                9,
-                10
-            ],
-            [
-                "nand",
-                1,
-                3
-            ],
-            [
-                "nand",
-                11,
-                12
-            ],
-            [
-                "and",
-                8,
-                13,
-                "Y",
-                0
-            ]
-        ]
     }
 }

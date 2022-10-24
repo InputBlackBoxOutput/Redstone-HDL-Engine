@@ -1,10 +1,9 @@
 {
-    "creator": "Yosys 0.9 (git sha1 1979e0b1, i686-w64-mingw32.static-g++ 5.5.0 -Os)",
+    "creator": "Yosys 0.9 (git sha1 1979e0b)",
     "modules": {
         "m21": {
             "attributes": {
-                "cells_not_processed": 1,
-                "src": "test\\2x1_mux.v:1"
+                "src": "test/2x1_mux.v:1"
             },
             "ports": {
                 "D0": {
@@ -33,16 +32,11 @@
                 }
             },
             "cells": {
-                "$ternary$test\\2x1_mux.v:6$1": {
+                "$abc$47$auto$blifparse.cc:371:parse_blif$48": {
                     "hide_name": 1,
-                    "type": "$mux",
-                    "model": "$mux:1",
-                    "parameters": {
-                        "WIDTH": 1
-                    },
-                    "attributes": {
-                        "src": "test\\2x1_mux.v:6"
-                    },
+                    "type": "$_MUX_",
+                    "parameters": {},
+                    "attributes": {},
                     "port_directions": {
                         "A": "input",
                         "B": "input",
@@ -66,22 +60,13 @@
                 }
             },
             "netnames": {
-                "$ternary$test\\2x1_mux.v:6$1_Y": {
-                    "hide_name": 1,
-                    "bits": [
-                        5
-                    ],
-                    "attributes": {
-                        "src": "test\\2x1_mux.v:6"
-                    }
-                },
                 "D0": {
                     "hide_name": 0,
                     "bits": [
                         2
                     ],
                     "attributes": {
-                        "src": "test\\2x1_mux.v:4"
+                        "src": "test/2x1_mux.v:4"
                     }
                 },
                 "D1": {
@@ -90,7 +75,7 @@
                         3
                     ],
                     "attributes": {
-                        "src": "test\\2x1_mux.v:4"
+                        "src": "test/2x1_mux.v:4"
                     }
                 },
                 "S": {
@@ -99,7 +84,7 @@
                         4
                     ],
                     "attributes": {
-                        "src": "test\\2x1_mux.v:4"
+                        "src": "test/2x1_mux.v:4"
                     }
                 },
                 "Y": {
@@ -108,51 +93,10 @@
                         5
                     ],
                     "attributes": {
-                        "src": "test\\2x1_mux.v:3"
+                        "src": "test/2x1_mux.v:3"
                     }
                 }
             }
         }
-    },
-    "models": {
-        "$mux:1": [
-            [
-                "port",
-                "S",
-                0
-            ],
-            [
-                "port",
-                "A",
-                0
-            ],
-            [
-                "port",
-                "B",
-                0
-            ],
-            [
-                "nport",
-                "S",
-                0
-            ],
-            [
-                "nand",
-                0,
-                2
-            ],
-            [
-                "nand",
-                1,
-                3
-            ],
-            [
-                "nand",
-                4,
-                5,
-                "Y",
-                0
-            ]
-        ]
     }
 }

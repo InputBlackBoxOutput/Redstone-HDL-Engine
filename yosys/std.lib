@@ -1,0 +1,69 @@
+// Cell library for yosys
+
+library(lab) {
+  cell(BUF) {
+    area: 1;
+    pin(A) { direction: input; }
+    pin(Y) { direction: output;
+              function: "A"; }
+  }
+
+  cell(NOT) {
+    area: 1
+    pin(A) {
+      direction: input;
+    }
+    pin(Y) {
+      function: "A'";
+      direction: output;
+    }
+  }
+
+  cell(NAND) {
+    area: 1
+    pin(A) {
+      direction: input;
+    }
+    pin(Y) {
+      function: "(A*B)'";
+      direction: output;
+    }
+    pin(B) {
+      direction: input;
+    }
+  }
+
+  cell(NOR) {
+    area: 1
+    pin(A) {
+      direction: input;
+    }
+    pin(Y) {
+      function: "(A+B)'";
+      direction: output;
+    }
+    pin(B) {
+      direction: input;
+    }
+  }
+
+  cell(DFF) {
+    area: 12
+    ff(IQ, IQN) {
+      clocked_on: C;
+      next_state: D;
+    }
+    pin(Q) {
+      function: "IQ";
+      direction: output;
+    }
+    pin(C) {
+      direction: input;
+      clock: true;
+    }
+    pin(D) {
+      direction: input;
+    }
+  }
+
+}

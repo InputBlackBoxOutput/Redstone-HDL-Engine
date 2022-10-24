@@ -7,56 +7,60 @@ import platform
 
 
 class Yosys:
-	def __init__(self):
-		# Select path based on operating system
-		operating_system = platform.system()
-		if operating_system == 'Linux':
-			# sudo apt install yosys
-			path = "/usr/bin/yosys"
-		elif operating_system == 'Windows':
-			path = "yosys\yosys.exe"
+    def __init__(self):
+        operating_system = platform.system()
+        if operating_system == 'Linux':
+            # sudo apt install yosys
+            path = "/usr/bin/yosys"
 
-		self.yosys = subprocess.Popen(
-			[path, '-Q', '-T'],
-			shell=False,
-			universal_newlines=True,
-			stdin=subprocess.PIPE,
-			stdout=subprocess.PIPE,
-			stderr=subprocess.PIPE
-		)
+        if operating_system == 'Windows':
+            raise Exception("Backend setup for Windows OS not supported!")
 
-	def process(self, filepath):
-		if not os.path.isfile(filepath):
-			raise Exception(f"File not found: {filepath}")
+        self.yosys = subprocess.Popen(
+            [path, '-Q', '-T'],
+            shell=False,
+            universal_newlines=True,
+            stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE
+        )
 
-		# Interact with yosys
-		# out, err = self.yosys.communicate(f"read_verilog {filepath}\n proc\n opt\n json -aig")
-		out, err = self.yosys.communicate(
-			f"read_verilog {filepath}\n json -aig")
+    def process(self, filepath):
+        if not os.path.isfile(filepath):
+            raise Exception(f"File not found: {filepath}")
 
-		if (err != ""):
-			return (1, err)
+        # Interact with yosys
+        output, error = self.yosys.communicate(
+            f"read_verilog {filepath} \nread_verilog - lib ./yosys/std.v \nsynth \ndfflibmap - liberty ./yosys/std.lib \nabc - liberty ./yosys/std.lib \nopt_clean \njson")
 
-		# Remove newline and comments
-		out = re.sub('\n', ' ', out)
-		out = re.sub('/\* +\d+ +\*/', ' ', out)
+        if (error != ""):
+            return (1, error)
 
-		# Parse JSON string
-		json_string = re.search('\{   "creator".*\}', out)
-		netlist_json = None
+        # Remove newline and comments
+        output = re.sub('\n', ' ', output)
+        output = re.sub('/\* +\d+ +\*/', ' ', output)
 
-		if json_string != None:
-			netlist_json = json.loads(json_string.group(0))
-		else:
-			raise Exception(f"Failed to parse netlist")
+        # Parse JSON string
+        json_string = re.search('\{   "creator".*\}', output)
+        netlist_json = None
 
-		return (0, netlist_json)
+        if json_string != None:
+            netlist_json = json.loads(json_string.group(0))
+        else:
+            raise Exception(f"Failed to parse netlist")
+
+        return (0, netlist_json)
 
 
 if __name__ == '__main__':
-	for verilog_file in glob.glob("test/*.v"):
-		y = Yosys()
-		netlist_json = y.process(filepath=verilog_file)
+    # verilog_file = "test/2x1_mux.v"
+    # y = Yosys()
+    # output = y.process(verilog_file)
+    # print(output)
 
-		with open(verilog_file.split('.')[0]+".json", 'w') as json_file:
-			json.dump(netlist_json, json_file, indent=4)
+    for verilog_file in glob.glob("test/*.v"):
+        y = Yosys()
+        netlist_json = y.process(filepath=verilog_file)[1]
+
+        with open(verilog_file.split('.')[0]+".json", 'w') as json_file:
+            json.dump(netlist_json, json_file, indent=4)

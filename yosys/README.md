@@ -1,5 +1,0 @@
-- Software: Yosys 
-- Version: 0.9
-- OS: Windows 32-bit
-- Source: http://yosyshq.net/yosys/download.html
-- Documentation: http://www.clifford.at/yosys/
