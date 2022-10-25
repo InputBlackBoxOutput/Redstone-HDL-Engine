@@ -6,136 +6,80 @@ from router import router, plotter
 class RedstoneSynth:
     def __init__(self):
         self.yosys = Yosys()
-        self.netlist_json = None
-
-        self.model_aig = {}
-        self.ports = []
-        self.cells = []
-        self.net = []
+        self.netlist = None
+        self.cell_layouts = {}
+        self.module_layout = {}
 
     def load_file(self, filepath):
         success, output = self.yosys.process(filepath=filepath)
 
         if (success == 0):
             self.netlist_json = output
-            self.extract_cell_model()
-            self.extract_netlist()
+        else:
+            raise Exception(f"Synth failed: {output}")
 
-    def extract_cell_model(self):
-        for each_model in self.netlist_json["models"]:
-            model = self.netlist_json["models"][each_model]
+    def generate_module_layout(self):
+        for m in self.netlist_json["modules"].keys():
+            current_column = 0
+            column_inputs = {0: []}
 
-            node_map = {}
-            graph = []
-            and_index = 0
+            layout = {'I': [], 'O': [], 0: []}
+            module = self.netlist_json["modules"][m]
 
-            for i, each_node in enumerate(model):
-                if "port" in each_node[0]:
-                    if each_node[0].startswith('n'):
-                        node_map[i] = f"~{each_node[1]}{each_node[2]}"
-                    else:
-                        node_map[i] = f"{each_node[1]}{each_node[2]}"
+            for p in module["ports"]:
+                port = module["ports"][p]
 
-                    if each_node[-2] == 'Y':
-                        graph.append((i, f"{each_node[-2]}{each_node[-1]}"))
+                if port["direction"] == "input":
+                    layout['I'].append((p, port['bits']))
 
-                if "and" in each_node[0]:
-                    graph.append((each_node[1], i))
-                    graph.append((each_node[2], i))
+                if port["direction"] == "output":
+                    layout['O'].append((p, port['bits']))
 
-                    if each_node[0].startswith('n'):
-                        node_map[i] = f"NAND {and_index}"
-                    else:
-                        node_map[i] = f"AND {and_index}"
+            for connection in layout['I']:
+                column_inputs[0] += connection[1]
 
-                    if each_node[-2] == 'Y':
-                        graph.append((i, f"{each_node[-2]}{each_node[-1]}"))
+            for c in module["cells"]:
+                cell = module["cells"][c]
 
-                    and_index += 1
+                cell_input = []
+                cell_output = []
+                for connection in cell["connections"]:
+                    if cell["port_directions"][connection] == "input":
+                        cell_input.append(cell["connections"][connection][0])
 
-                if "true" in each_node[0]:
-                    for n in range(len(each_node)):
-                        if each_node[n] == 'Y':
-                            graph.append(("L1", f"Y{n}"))
-                            node_map[i] = "L1"
+                    if cell["port_directions"][connection] == "output":
+                        cell_output.append(cell["connections"][connection][0])
 
-                if "false" in each_node[0]:
-                    for n in range(len(each_node)):
-                        if each_node[n] == 'Y':
-                            graph.append(("L0", f"Y{n}"))
-                            node_map[i] = "L0"
+                cell_info = (cell["type"], cell_input, cell_output)
+                next_column_position = 0
+                for i in range(0, current_column+1):
+                    all_connections_present = True
+                    for inpt in cell_input:
 
-            mapped_graph = []
-            for edge in graph:
-                if 'Y' not in str(edge[0]) and 'L' not in str(edge[0]):
-                    src = node_map[edge[0]]
+                        if inpt not in column_inputs[i]:
+                            all_connections_present = False
+
+                    if all_connections_present:
+                        layout[i].append(cell_info)
+                        next_column_position = i + 1
+                        break
                 else:
-                    src = edge[0]
+                    current_column += 1
+                    layout[current_column] = []
 
-                if 'Y' not in str(edge[1]) and 'L' not in str(edge[0]):
-                    dst = node_map[edge[1]]
+                    layout[current_column].append(cell_info)
+                    next_column_position = current_column + 1
+
+                if next_column_position in column_inputs:
+                    column_inputs[next_column_position] += cell_output
                 else:
-                    dst = edge[1]
+                    column_inputs[next_column_position] = list(cell_output)
 
-                mapped_graph.append((src, dst))
-
-            self.model_aig[each_model] = mapped_graph
-
-    def extract_netlist(self):
-        for module in self.netlist_json["modules"].keys():
-            m = self.netlist_json["modules"][module]
-
-            for port in m["ports"]:
-                p = m["ports"][port]
-                self.ports.append((port, p["direction"], p["bits"]))
-
-            for cell in m["cells"]:
-                c = m["cells"][cell]
-                try:
-                    model = c["model"]
-                    self.cells.append(
-                        (c["type"], model, c["parameters"], c["port_directions"], c["connections"]))
-                except:
-                    self.cells.append(
-                        (c["type"], c["parameters"], c["port_directions"], c["connections"]))
-
-            for net in m["netnames"]:
-                n = m["netnames"][net]
-                self.net.append((net, n["bits"]))
-
-    def dump(self):
-        print("Model AIG:")
-        for each_model in self.model_aig:
-            print(each_model)
-            for entity in self.model_aig[each_model]:
-                print(entity)
-
-        print("\nPorts:")
-        for each in s.ports:
-            print(each)
-
-        print("\nCells:")
-        for each in s.cells:
-            print(each)
-
-        print("\nNet:")
-        for each in s.net:
-            print(each)
-
-    def dump_json(self):
-        json_data = {}
-        json_data["model_aig"] = self.model_aig
-        json_data["ports"] = self.ports
-        json_data["cells"] = self.cells
-        json_data["net"] = self.net
-
-        return json_data
+            self.module_layout[m] = layout
 
     def generate_cell_layouts(self):
-        self.cell_layouts = {}
-
         for each_model in self.netlist_json["models"]:
-            current_col = 0
+            current_column = 0
             layout = {'I': [], 'O': [], 0: []}
             model = self.netlist_json["models"][each_model]
 
@@ -164,17 +108,17 @@ class RedstoneSynth:
                         prev_out = i-1
 
                         if prev_out not in inpts:
-                            current_col -= 1
+                            current_column -= 1
 
                     if each_node[0].startswith('n'):
-                        layout[current_col].append(
+                        layout[current_column].append(
                             ['~', [each_node[1], each_node[2]], out, "NAND"])
                     else:
-                        layout[current_col].append(
+                        layout[current_column].append(
                             [' ', [each_node[1], each_node[2]], out, "AND"])
 
-                    current_col += 1
-                    layout[current_col] = []
+                    current_column += 1
+                    layout[current_column] = []
 
                 if "true" in each_node[0]:
                     for n in range(len(each_node)):
@@ -189,7 +133,7 @@ class RedstoneSynth:
                                 ('0', i, f"{each_node[1]}{each_node[n+1]}"))
 
             remove = []
-            for i in range(current_col+1):
+            for i in range(current_column+1):
                 if layout[i] == []:
                     remove.append(i)
 
@@ -203,22 +147,27 @@ class RedstoneSynth:
 
 
 if __name__ == "__main__":
-    # verilog_file = "test/mux.v"
+    # verilog_file = "test/counter.v"
     # s = RedstoneSynth()
     # s.load_file(verilog_file)
-    # s.dump()
 
     for verilog_file in glob.glob("test/*.v"):
         print(f"\nFile: {verilog_file}")
         s = RedstoneSynth()
         s.load_file(verilog_file)
-        s.dump()
 
         print("\nCell layout/s:\n")
         s.generate_cell_layouts()
-        for i in s.cell_layouts:
-            print(i)
-            for j in s.cell_layouts[i]:
-                print(j, s.cell_layouts[i][j])
+        for model in s.cell_layouts:
+            print(model)
+            for cols in s.cell_layouts[model]:
+                print(cols, s.cell_layouts[model][cols])
+
+        print("\nCell layout/s:\n")
+        s.generate_module_layout()
+        for module in s.module_layout:
+            print(module)
+            for col in s.module_layout[module]:
+                print(col, s.module_layout[module][col])
 
         print("\n" + '-' * 70)
