@@ -147,27 +147,42 @@ class RedstoneSynth:
 
 
 if __name__ == "__main__":
-    # verilog_file = "test/counter.v"
-    # s = RedstoneSynth()
-    # s.load_file(verilog_file)
+    verilog_file = "test/mux.v"
 
-    for verilog_file in glob.glob("test/*.v"):
-        print(f"\nFile: {verilog_file}")
-        s = RedstoneSynth()
-        s.load_file(verilog_file)
+    s = RedstoneSynth()
+    s.load_file(verilog_file)
 
-        print("\nCell layout/s:\n")
-        s.generate_cell_layouts()
-        for model in s.cell_layouts:
-            print(model)
-            for cols in s.cell_layouts[model]:
-                print(cols, s.cell_layouts[model][cols])
+    print("\nCell layout/s:\n")
+    s.generate_cell_layouts()
+    for model in s.cell_layouts:
+        print(model)
+        for cols in s.cell_layouts[model]:
+            print(cols, s.cell_layouts[model][cols])
 
-        print("\nCell layout/s:\n")
-        s.generate_module_layout()
-        for module in s.module_layout:
-            print(module)
-            for col in s.module_layout[module]:
-                print(col, s.module_layout[module][col])
+    print("\nModule layout:\n")
+    s.generate_module_layout()
+    for module in s.module_layout:
+        print(module)
+        for col in s.module_layout[module]:
+            print(col, s.module_layout[module][col])
 
-        print("\n" + '-' * 70)
+    # for verilog_file in glob.glob("test/*.v"):
+    #     print(f"\nFile: {verilog_file}")
+    #     s = RedstoneSynth()
+    #     s.load_file(verilog_file)
+
+    #     print("\nCell layout/s:\n")
+    #     s.generate_cell_layouts()
+    #     for model in s.cell_layouts:
+    #         print(model)
+    #         for cols in s.cell_layouts[model]:
+    #             print(cols, s.cell_layouts[model][cols])
+
+    #     print("\nModule layout:\n")
+    #     s.generate_module_layout()
+    #     for module in s.module_layout:
+    #         print(module)
+    #         for col in s.module_layout[module]:
+    #             print(col, s.module_layout[module][col])
+
+    #     print("\n" + '-' * 70)
