@@ -7,6 +7,7 @@
 * Minecraft redstone
   - https://minecraft.fandom.com/wiki/Redstone_circuits/Logic
   - https://minecraft.fandom.com/wiki/Command_Block
+  - https://minecraft.fandom.com/wiki/Structure_Block
   - https://www.curseforge.com/minecraft/mc-mods/super-circuit-maker
 
 * Verilog
