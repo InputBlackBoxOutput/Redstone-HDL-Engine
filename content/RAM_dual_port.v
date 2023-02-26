@@ -1,36 +1,47 @@
-module sram(q_a, q_b, data_a, data_b, addr_a, addr_b, we_a, we_b, clk);
-	input [7:0] data_a, data_b;
-	input [5:0] addr_a, addr_b;
-	input we_a, we_b, clk;
-	output reg [7:0] q_a, q_b;
+// Specification
+//
+// Functionality: 
+// Write to memory
+// if(WE_X == 1) then MEM[ADDR_X] = DATA_X
+// Read from memory
+// if(WE_X == 0) then Q_X = MEM[ADDR_X]
+//
+// Input/s: DATA_A, DATA_B, ADDR_A, ADDR_B, WE_A, WE_B, CLK
+// Output/s: Q_A, Q_B
 
-	reg [7:0] sram[63:0];
+module RAM(Q_A, Q_B, DATA_A, DATA_B, ADDR_A, ADDR_B, WE_A, WE_B, CLK);
+	input [7:0] DATA_A, DATA_B;
+	input [5:0] ADDR_A, ADDR_B;
+	input WE_A, WE_B, CLK;
+	output reg [7:0] Q_A, Q_B;
+
+	reg [7:0] memory [63:0];
 	
 	// Port A
-	always @ (posedge clk)
+	always @ (posedge CLK)
 	begin
-		if (we_a) 
+		if (WE_A) 
 		begin
-			sram[addr_a] <= data_a;
-			q_a <= data_a;
+			memory[ADDR_A] <= DATA_A;
+			Q_A <= DATA_A;
 		end
 		else 
 		begin
-			q_a <= sram[addr_a];
+			Q_A <= memory[ADDR_A];
 		end
 	end
 	
 	// Port B
-	always @ (posedge clk)
+	always @ (posedge CLK)
 	begin
-		if (we_b)
+		if (WE_B)
 		begin
-			sram[addr_b] <= data_b;
-			q_b <= data_b;
+			memory[ADDR_B] <= DATA_B;
+			Q_B <= DATA_B;
 		end
 		else
 		begin
-			q_b <= sram[addr_b];
+			Q_B <= memory[ADDR_B];
 		end
 	end
 	

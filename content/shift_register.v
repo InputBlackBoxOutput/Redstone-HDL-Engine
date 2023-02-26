@@ -1,11 +1,19 @@
-module shift_register(SO, SI, LR, clk, rst);
-	input SI, LR, clk, rst;
+// Specification
+//
+// Functionality: 
+// Serial In Serial Out shift register
+//
+// Input/s: SI, LR, CLK, RST
+// Output/s: SO
+
+module shift_register(SI, LR, CLK, RST, SO);
+	input SI, LR, CLK, RST;
 	output SO;
 
-	reg [4:0]SR;
+	reg [4:0] SR;
   
-  always@(posedge clk) begin
-    if(!rst)
+  always@(posedge CLK) begin
+    if(!RST)
 		SR <= 5'd0;
 	
     if(LR)

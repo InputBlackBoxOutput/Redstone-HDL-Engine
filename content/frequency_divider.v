@@ -1,26 +1,21 @@
-module div_3(clk, reset, clk_out);
-	input clk;
-	input reset;
-	output clk_out
-	
-	reg[1:0] pos_cnt;
-	reg [1:0]neg_cnt;
+// Specification
+//
+// Functionality: 
+// FREQ(CLK_OUT) = FREQ(CLK) / 2 
+// 
+//
+// Input/s: CLK, RST
+// Output/s: CLK_OUT
 
-	always@(posedge clk)
-		if(reset)
-			pos_cnt<= 0;
-		else if(pos_cnt==2)
-			pos_cnt<= 0;
+module frequency_divider( CLK, RST, CLK_OUT );
+	output reg CLK_OUT;
+	input CLK ;
+	input RST;
+
+	always @(posedge CLK) begin
+		if (~RST)
+			CLK_OUT <= 1'b0;
 		else
-			pos_cnt<= pos_cnt+1;
-
-	always@(negedge clk)
-	if(reset)
-		neg_cnt<= 0;
-	else if(neg_cnt==2)
-		neg_cnt<= 0;
-	else neg_cnt<= neg_cnt+1;
-
-	assign clk_out=((pos_cnt==2) | (neg_cnt==2));
-
+			CLK_OUT <= ~CLK_OUT;	
+		end
 endmodule

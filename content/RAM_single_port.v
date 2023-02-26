@@ -1,20 +1,31 @@
-module sram(q,data,addr,we,clk);
-	input [7:0] data;
-	input [5:0] addr;
-	input we, clk;
-	output [7:0] q;
+// Specification
+//
+// Functionality: 
+// Write to memory
+// if(WE == 1) then MEM[ADDR] = DATA
+// Read from memory
+// if(WE == 0) then Q = MEM[ADDR]
+//
+// Input/s: DATA, ADDR, WE, CLK
+// Output/s: Q
+
+module RAM(Q, DATA, ADDR, WE, CLK);
+	input [7:0] DATA;
+	input [5:0] ADDR;
+	input WE, CLK;
+	output [7:0] Q;
 	
-	reg [7:0] sram[63:0];
+	reg [7:0] memory[63:0];
+	reg [5:0] ADDR_REG;
 	
-	reg [5:0] addr_reg;
-	
-	always @ (posedge clk)
+	always @ (posedge CLK)
 	begin
-		if (we)
-			ram[addr] <= data;
-		addr_reg <= addr;
+		if (WE)
+			memory[ADDR] <= DATA;
+		
+		ADDR_REG <= ADDR;
 	end
 		
-	assign q = ram[addr_reg];
+	assign Q = memory[ADDR_REG];
 	
 endmodule

@@ -1,14 +1,14 @@
 // Specification
 //
 // Functionality: 
-// Y = X1 | X2
+// Y = A & B
 //
-// Input/s: X1, X2
+// Input/s: A, B
 // Output/s: Y
 
-module _or(Y, X1, X2);
+module _and(Y, X1, X2);
   input X1, X2;
   output Y;
   
-  assign Y = X1 | X2;
+  assign Y = X1 & X2;
 endmodule

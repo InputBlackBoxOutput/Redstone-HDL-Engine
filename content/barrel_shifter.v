@@ -1,15 +1,23 @@
-module barrel_shifter(out, in, lr, n);
+// Specification
+//
+// Functionality: 
+// LR == 1 => OUT = LSHF(IN, N)
+// LR == 0 => OUT = RSHF(IN, N)
+//
+// Input/s: IN, LR, N
+// Output/s: OUT
 
-	input [7:0]In;
-	input [2:0]n;
-	input lr;
-	output reg [7:0]out;
+module barrel_shifter(OUT, IN, LR, N);
+	input [7:0]IN;
+	input [2:0]N;
+	input LR;
+	output reg [7:0]OUT;
 
 	always@(*) begin
-		if(lr)
-			out = in << n;
+		if(LR)
+			OUT = IN << N;
 		else
-			out = in >> n;
+			OUT = IN >> N;
 	end
 
 endmodule

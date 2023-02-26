@@ -1,52 +1,68 @@
-module sequence_detector(reset, clk, in, det);
-	input reset;
-	input clk;
-	input in;
-	output reg det;
+// Specification
+//
+// Functionality: 
+// Detect a sequence using a FSM
+//
+// Input/s: IN, RST, CLK
+// Output/s: DET
 
-	reg [2:0] pr_stage, nx_stage; parameter  s0=3'b000;
-	parameter s1=3'b010;
-	parameter s2=3'b011 ;
-	parameter s3=3'b100 ;
-	always@(posedge clk)
-	begin
-		if(reset)
-			pr_stage<=s0;
+module sequence_detector(IN, DET, RST, CLK);
+	input IN;
+	output reg DET;
+
+	input RST;
+	input CLK;
+
+	reg [2:0] PR_STAGE, NX_STAGE; 
+	parameter s0 = 3'b000;
+	parameter s1 = 3'b010;
+	parameter s2 = 3'b011;
+	parameter s3 = 3'b100;
+	
+	always@(posedge CLK) begin
+		if(RST)
+			PR_STAGE <= s0;
 		else
-		pr_stage<=nx_stage; 
+			PR_STAGE <= NX_STAGE; 
 	end
-	always@(pr_stage,in)
-	case(pr_stage)
-		s0:if(in==1)
-			nx_stage=s1;
+
+	always@(PR_STAGE, IN)
+	case(PR_STAGE)
+
+		// State 0
+		s0:if(IN == 1)
+			NX_STAGE = s1;
 		else
-			nx_stage=s0;
-		s1:if(in==0)
-			nx_stage=s2;
+			NX_STAGE = s0;
+
+		// State 1
+		s1:if(IN == 0)
+			NX_STAGE = s2;
 		else
-			nx_stage=s1;
-		s2:if(in==1)
-			nx_stage=s3;
+			NX_STAGE = s1;
+
+		// State 2
+		s2:if(IN == 1)
+			NX_STAGE=s3;
 		else
-			nx_stage=s0;
-		s3:if(in==1)
-			nx_stage=s1;
+			NX_STAGE=s0;
+
+		// State 3
+		s3:if(IN == 1)
+			NX_STAGE=s1;
 		else
-			nx_stage=s2;
-		default:nx_stage=s0;
+			NX_STAGE=s2;
+		
+		default:NX_STAGE=s0;
 	endcase
 
 
-	always@(pr_stage)
-	case(pr_stage)
-		s0: det=0;
-		s1: det=0;
-		s2: det=0;
-		s3: det=1;
-		default: det=0;
+	always@(PR_STAGE)
+	case(PR_STAGE)
+		s0: DET=0;
+		s1: DET=0;
+		s2: DET=0;
+		s3: DET=1;
+		default: DET=0;
 	endcase
 endmodule
-
-
-
-

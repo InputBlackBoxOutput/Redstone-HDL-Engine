@@ -1,19 +1,27 @@
-module up_down_counter(UD, Q, clk, rst);
-  input UD, clk, rst;
+// Specification
+//
+// Functionality: 
+// if(UD == 1) then count += 1 
+// if(UD == 0) then count -= 1
+//
+// Input/s: UD, CLK, RST 
+// Output/s: Q
+
+module counter(UD, Q, CLK, RST);
+  input UD, CLK, RST;
   output [7:0]Q;
+
+  reg [7:0] COUNT;
   
-  reg [7:0]counter_reg;
-  
-  always@(negedge clk) begin
-    if(!rst)
-  		counter_reg <= 8'b0;
-    
+  always@(posedge CLK) begin
+    if(!RST)
+  		COUNT <= 8'b0;
+
     if(UD)
-      counter_reg <= counter_reg + 1;
+      COUNT <= COUNT + 1;
     else
-      counter_reg <= counter_reg - 1;
-    
+      COUNT <= COUNT - 1;
   end
   
-  assign Q = counter_reg;
+  assign Q = COUNT;
 endmodule
