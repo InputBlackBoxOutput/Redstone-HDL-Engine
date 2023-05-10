@@ -56,6 +56,59 @@ class Contraption:
         print(self.canvas[:2])
 
 
+class ContraptionDiagram:
+    def __init__(self):
+        self.height = 10
+        self.width = 10
+
+        self.air = ' '
+        self.light_gray_concrete = "#"
+
+        self.redstone_block = "@"
+        self.redstone_dust = "-"
+        self.redstone_torch = "="
+        self.redstone_lamp = "*"
+        self.redstone_switch = "]"
+
+        self.canvas = self.create_minecraft_canvas()
+
+    def create_minecraft_canvas(self):
+        canvas = []
+
+        for i in range(self.height):
+            canvas.append([])
+            for j in range(self.width):
+                canvas[i].append(' ')
+
+        return canvas
+
+    def place_port(self, coordinates):
+        self.canvas[coordinates[0]][coordinates[1]] = "!"
+
+    def place_nport(self, coordinates):
+        self.canvas[coordinates[0]][coordinates[1]] = "!"
+
+    def place_and(self, coordinates):
+        self.canvas[coordinates[0]][coordinates[1]] = "!"
+
+    def place_nand(self, coordinates):
+        self.canvas[coordinates[0]][coordinates[1]] = "!"
+
+    def place_logic1(self, coordinates):
+        self.canvas[coordinates[0]][coordinates[1]] = "!"
+
+    def place_logic0(self, coordinates):
+        self.canvas[coordinates[0]][coordinates[1]] = "!"
+
+    def show_canvas(self):
+        for i in range(self.height):
+            print("".join(self.canvas[i]))
+
+
 if __name__ == "__main__":
-    c = Contraption()
+    # c = Contraption()
+    # c.show_canvas()
+
+    c = ContraptionDiagram()
+    c.place_port((0, 3))
     c.show_canvas()

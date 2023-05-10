@@ -13,8 +13,8 @@ class Yosys:
             # sudo apt install yosys
             path = "/usr/bin/yosys"
 
-        if operating_system == 'Windows':
-            raise Exception("Backend setup for Windows OS not supported!")
+        if operating_system != 'Linux':
+            raise Exception("Backend setup for non Linux kernel based OS is not supported!")
 
         self.yosys = subprocess.Popen(
             [path, '-Q', '-T'],
