@@ -1,188 +1,69 @@
-import glob
-from yosys import Yosys
-from router import router, plotter
-
+import struct
 
 class RedstoneSynth:
     def __init__(self):
-        self.yosys = Yosys()
-        self.netlist = None
-        self.cell_layouts = {}
-        self.module_layout = {}
+        self.GDSII = []
 
-    def load_file(self, filepath):
-        success, output = self.yosys.process(filepath=filepath)
+    def read_GDSII(self, filepath):
+        datatype_size_map = {0x00: 1, 0x01: 1, 0x02: 2, 0x03: 4, 0x04: 4, 0x05: 8, 0x06: 1}
+        record_type_map = { 0x00 : 'HEADER', 0x01 : 'BGNLIB', 0x02 : 'LIBNAME', 0x03 : 'UNITS', 0x04 : 'ENDLIB', 0x05 : 'BGNSTR', 0x06 : 'STRNAME', 0x07 : 'ENDSTR', 0x08 : 'BONDARY', 0x09 : 'PATH', 0x0A : 'SERF', 0x0B : 'AREF', 0x0C : 'TEXT', 0x0D : 'LAYER', 0x0E : 'DATATYPE', 0x0F : 'WIDTH', 0x10 : 'XY', 0x11 : 'ENDEL', 0x12 : 'SNAME', 0x13 : 'COLROW', 0x15 : 'NODE', 0x16 : 'TEXTTYPE',  0x17 : 'PRESENTATION',  0x19 : 'STRING',  0x1A : 'STRANS',  0x1B : 'MAG',  0x1C : 'ANGLE',  0x1F : 'REFLIBS',  0x20 : 'FONTS',  0x21 : 'PATHTYPE',  0x22 : 'GENERATIONS',  0x23 : 'ATTRATABLE',  0x26 : 'ELFLAGS',  0x2A : 'NODETYPE',  0x2B : 'PROPATTR',  0x2C : 'PROPVALUE',  0x2D : 'BOX',  0x2E : 'BOXTYPE',  0x2F : 'PLEX',  0x32 : 'TAPENUM',  0x33 : 'TAPECODE',  0x36 : 'FORMAT',  0x37 : 'MASK',  0x38 : 'ENDMASKS'}
+           
+        with open(filepath, mode='rb') as file_handle:
+            while True:
+                record_size = struct.unpack('>h', file_handle.read(2))[0] 
+                file_handle.seek(0, 1)
+                record_type = struct.unpack('>b', file_handle.read(1))[0]
+                file_handle.seek(0, 1)
+                record_datatype = struct.unpack('>b', file_handle.read(1))[0]
+                file_handle.seek(0, 1)
+                
+                bytes = [] 
+                for i in list(range(0, (record_size - 4) // datatype_size_map[record_datatype])):
+                    bytes.append( file_handle.read(datatype_size_map[record_datatype]) )
+                    file_handle.seek(0, 1)
 
-        if (success == 0):
-            self.netlist_json = output
-        else:
-            raise Exception(f"Synth failed: {output}")
 
-    def generate_module_layout(self):
-        for m in self.netlist_json["modules"].keys():
-            current_column = 0
-            column_inputs = {0: []}
+                record_data = []
+                if record_datatype == 0x02:
+                    for i in list(range(0, (record_size - 4) // 2)):
+                        record_data.append(struct.unpack('>h', bytes[i])[0] )
 
-            layout = {'I': [], 'O': [], 0: []}
-            module = self.netlist_json["modules"][m]
+                if record_datatype == 0x03:
+                    for i in list(range(0, (record_size - 4) // 4)):
+                        record_data.append( struct.unpack('>l', bytes[i])[0] )
 
-            for p in module["ports"]:
-                port = module["ports"][p]
+                if record_datatype == 0x04:
+                    for i in list(range(0, (record_size - 4) // 4)):
+                        record_data.append( struct.unpack('>f', bytes[i])[0] )
 
-                if port["direction"] == "input":
-                    layout['I'].append((p, port['bits']))
+                if record_datatype == 0x05:
+                    for i in list(range(0, (record_size - 4) // 8)):
+                        record_data.append( struct.unpack('>d', bytes[i])[0] )
 
-                if port["direction"] == "output":
-                    layout['O'].append((p, port['bits']))
+                if record_datatype == 0x06:
+                    for i in list(range(0, (record_size - 4))):
+                        char = struct.unpack('>c', bytes[i])[0].decode("utf-8") 
+                        if char != '\x00':
+                            record_data.append(char)
 
-            for connection in layout['I']:
-                column_inputs[0] += connection[1]
-
-            for c in module["cells"]:
-                cell = module["cells"][c]
-
-                cell_input = []
-                cell_output = []
-                for connection in cell["connections"]:
-                    if cell["port_directions"][connection] == "input":
-                        cell_input.append(cell["connections"][connection][0])
-
-                    if cell["port_directions"][connection] == "output":
-                        cell_output.append(cell["connections"][connection][0])
-
-                cell_info = (cell["type"], cell_input, cell_output)
-                next_column_position = 0
-                for i in range(0, current_column+1):
-                    all_connections_present = True
-                    for inpt in cell_input:
-
-                        if inpt not in column_inputs[i]:
-                            all_connections_present = False
-
-                    if all_connections_present:
-                        layout[i].append(cell_info)
-                        next_column_position = i + 1
-                        break
+                if record_datatype == 0x00 or record_datatype == 0x01:
+                    record = [record_type_map[record_type]]
                 else:
-                    current_column += 1
-                    layout[current_column] = []
+                    record = [record_type_map[record_type], record_data]
+                self.GDSII.append(record)
 
-                    layout[current_column].append(cell_info)
-                    next_column_position = current_column + 1
-
-                if next_column_position in column_inputs:
-                    column_inputs[next_column_position] += cell_output
-                else:
-                    column_inputs[next_column_position] = list(cell_output)
-
-            self.module_layout[m] = layout
-
-    def generate_cell_layouts(self):
-        for each_model in self.netlist_json["models"]:
-            current_column = 0
-            layout = {'I': [], 'O': [], 0: []}
-            model = self.netlist_json["models"][each_model]
-
-            for i, each_node in enumerate(model):
-                if "port" in each_node[0]:
-                    if each_node[0].startswith('n'):
-                        layout['I'].append(
-                            ('~', i, f"~{each_node[1]}{each_node[2]}"))
-                    else:
-                        layout['I'].append(
-                            (' ', i, f"{each_node[1]}{each_node[2]}"))
-
-                    if each_node[-2] == 'Y':
-                        out = f"{each_node[-2]}{each_node[-1]}"
-                        layout['O'].append((' ', i, out))
-
-                if "and" in each_node[0]:
-                    out = i
-                    if each_node[-2] == 'Y':
-                        out = f"{each_node[-2]}{each_node[-1]}"
-                        layout['O'].append((' ', i, out))
-
-                    # Subsequent independent AND/NAND gates
-                    if 'and' in model[i-1][0] and 'and' in model[i][0]:
-                        inpts = model[i][1:]
-                        prev_out = i-1
-
-                        if prev_out not in inpts:
-                            current_column -= 1
-
-                    if each_node[0].startswith('n'):
-                        layout[current_column].append(
-                            ['~', [each_node[1], each_node[2]], out, "NAND"])
-                    else:
-                        layout[current_column].append(
-                            [' ', [each_node[1], each_node[2]], out, "AND"])
-
-                    current_column += 1
-                    layout[current_column] = []
-
-                if "true" in each_node[0]:
-                    for n in range(len(each_node)):
-                        if each_node[n] == 'Y':
-                            layout['O'].append(
-                                ('1', i, f"{each_node[1]}{each_node[n+1]}"))
-
-                if "false" in each_node[0]:
-                    for n in range(len(each_node)):
-                        if each_node[n] == 'Y':
-                            layout['O'].append(
-                                ('0', i, f"{each_node[1]}{each_node[n+1]}"))
-
-            remove = []
-            for i in range(current_column+1):
-                if layout[i] == []:
-                    remove.append(i)
-
-            for entity in remove:
-                layout.pop(entity)
-
-            self.cell_layouts[each_model] = layout
-
+                if(record_type_map[record_type] == "ENDLIB"):
+                    break
+    
     def synthesize(self):
-        return str(self.dump_json())
+        return 
 
 
 if __name__ == "__main__":
-    verilog_file = "test/mux.v"
-
     s = RedstoneSynth()
-    s.load_file(verilog_file)
+    
+    # s.read_GDSII(filepath = "test/and.gds")
+    # print(s.GDSII)
 
-    print("\nCell layout/s:\n")
-    s.generate_cell_layouts()
-    for model in s.cell_layouts:
-        print(model)
-        for cols in s.cell_layouts[model]:
-            print(cols, s.cell_layouts[model][cols])
-
-    print("\nModule layout:\n")
-    s.generate_module_layout()
-    for module in s.module_layout:
-        print(module)
-        for col in s.module_layout[module]:
-            print(col, s.module_layout[module][col])
-
-    # for verilog_file in glob.glob("test/*.v"):
-    #     print(f"\nFile: {verilog_file}")
-    #     s = RedstoneSynth()
-    #     s.load_file(verilog_file)
-
-    #     print("\nCell layout/s:\n")
-    #     s.generate_cell_layouts()
-    #     for model in s.cell_layouts:
-    #         print(model)
-    #         for cols in s.cell_layouts[model]:
-    #             print(cols, s.cell_layouts[model][cols])
-
-    #     print("\nModule layout:\n")
-    #     s.generate_module_layout()
-    #     for module in s.module_layout:
-    #         print(module)
-    #         for col in s.module_layout[module]:
-    #             print(col, s.module_layout[module][col])
-
-    #     print("\n" + '-' * 70)
+    s.read_GDSII(filepath = "test/counter.gds")
+    print(s.GDSII)
