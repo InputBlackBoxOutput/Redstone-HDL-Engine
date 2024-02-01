@@ -1,6 +1,0 @@
-# heroku login
-# heroku stack:set container --app <app-name>
-
-build:
-  docker:
-    web: Dockerfile
